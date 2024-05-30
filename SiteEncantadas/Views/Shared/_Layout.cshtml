@@ -1,0 +1,88 @@
+﻿@model SiteEncantadas.Models.Entities.Usuario 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SiteEncantadas</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    @* mudei versão aqui do jquery *@
+</head>
+
+<style>
+    .linkColor {
+        color: #ffffffed !important;
+    }
+</style>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 minhaNavBar">
+            <div class="container">
+                @*@await Component.InvokeAsync("Menu");*@
+                <div class="container">
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1 linksCabecalho">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Home" asp-action="Index">Página Inicial</a>
+                            </li>
+                            <li class="nav-item">
+                                @*Ingresso é o nome da minha controller e Reserve é a função chamada da controller. Mas a função action precisa ser nome da view em Views*@
+                                <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Ingresso" asp-action="Reserva">Compre seu ingresso</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Quem_Somos" asp-action="Quem_Somos">Quem Somos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Cha" asp-action="Cha">Funcionamento do Chá</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark linkColor" asp-area="" asp-controller="FotosVideos" asp-action="FotosVideos">Fotos e Vídeos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Cadastro" asp-action="Cadastro">Cadastre-se</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Duvidas" asp-action="Duvidas">Dúvidas Frequentes</a>
+                            </li>
+                            <li class="nav-item">
+                                @if (Model != null)
+                                {
+                                    @if (Model.Cadastro != null)
+                                    {
+                                        <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Login" asp-action="SairSessaoUsuario">Sair</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
+                                    }
+                                }
+                                @if (Model == null)
+                                {
+                                    <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @*ESSA FUNÇÃO FAZ AS CHAMADAS PARA AS MINHAS PÁGINAS*@
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - WebEncantadas
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

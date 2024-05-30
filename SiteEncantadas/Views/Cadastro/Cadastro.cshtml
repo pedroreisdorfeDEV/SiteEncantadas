@@ -1,0 +1,399 @@
+﻿@model SiteEncantadas.Models.ViewModels.CadastroViewModel
+
+@{
+    ViewData["Title"] = "Cadastrto";
+}
+
+<style>
+
+</style>
+
+
+<head>
+    <script src="~/js/cadastro.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/google-libphonenumber/3.2.16/libphonenumber.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/3.5.1/jquery.maskedinput.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+
+    <link rel="stylesheet" href="~/css/style_Cadastro.css" />
+</head>
+
+<body>
+
+    <h4 class="tituloCadastro">Cadastro</h4>
+    <hr />
+    <div class="registers">
+        <div class="">
+            <form asp-action="Create_" method="post">
+                @*aqui estou colocando que meu cadastro tem relação direta com Create da minha CadastroController.cs*@
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group divisoesCadastro">
+                    <div class="form-group ladoEsquerdoDoCadastro">
+                        <label asp-for="NomeResponsavel" class="control-label">Nome do Responsável</label>
+                        <input asp-for="NomeResponsavel" class="form-control" id="nomeDoResponsavel" onblur="validaNomeResponsavel()" />
+                        <span class="nomeinvalido">Preencha nome e sobrenome!</span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CPF" class="control-label">CPF</label>
+                        <input name="CPF" class="form-control" type="tel" id="cpfResponsavel" placeholder="000.000.000-00" maxlength="14" onblur="validaCpf()" />
+                        <span class="cpfinvalido">CPF inválido</span>
+                    </div>
+                </div>
+                <div class="form-group divisoesCadastro">
+                    <div class="form-group ladoEsquerdoDoCadastro">
+                        <label asp-for="Email" class="control-label">E-mail</label>
+                        <input asp-for="Email" class="form-control" id="email" />
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ConfirmacaoEmail" class="control-label">Confirmar e-mail</label>
+                        <input asp-for="ConfirmacaoEmail" class="form-control" id="confirma_email" onblur="validaConfirmacaoEmail();" />
+                    </div>
+                </div>
+                <div class="form-group divisoesCadastro">
+                    <div class="form-group ladoEsquerdoDoCadastro">
+                        <label asp-for="Senha" class="control-label">Senha</label>
+                        <input asp-for="Senha" class="form-control" id="senha" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Confirmar senha</label>
+                        <input class="form-control" id="confirmacaoSenha" onblur="validaConfirmacaoSenha();" />
+                    </div>
+                </div>
+
+                <div class="form-group divisoesCadastro">
+                    <div class="form-group ladoEsquerdoDoCadastro">
+                        <label asp-for="Contato" class="control-label">Contato</label>
+                        <input asp-for="Contato" class="form-control phone-mask" type="tel" id="telefone" name="Contato" placeholder="(00) 00000-0000" onkeypress="mascara()" maxlength="15" onblur="validaContatoCelular()" />
+                        <span class="contatoInvalido">Número inválido</span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContatoEmergencial" class="control-label">Contato emergencial</label>
+                        <input asp-for="ContatoEmergencial" class="form-control phone-mask" type="tel" id="telefoneEmergencial" name="ContatoEmergencial" placeholder="(00) 00000-0000" onkeypress="mascara()" maxlength="15" onblur="validaContatoCelularEmergencial()" />
+                        <span class="contatoEmergencialInvalido">Número inválido</span>
+                    </div>
+                </div>
+
+                <div>
+                    <label>Quantas crianças você irá levar?</label>
+                    <input id="numeroDeCriancas" name="numeroDeCriancas" />
+                    <button onclick="adicionarCriancas();" class="botaoAdicionar">Adicionar</button>
+                </div>
+
+                <div id="inputsCad">
+                    <div id="chield1" class="crianca_1">
+                        <div class="parte1_2_chield">
+                            <div class="ladoDireitoInputCrianca">
+                                <label>Nome da Criança: </label>
+                                <input class="form-control inputCadCrianas" name="NomeCrianca_1" type="text" asp-for="NomeCrianca_1" />
+                            </div>
+                            <div>
+                                <label>Data de Nascimento:</label>
+                                <input id="dateBorn1" class="form-control dataNascimentoInput" name="DataDeNascimento_1" type="date" asp-for="DataDeNascimento_1 " onblur="validaNascimento(this);" />
+                                <span class="data1">Data inválida</span>
+                            </div>
+                        </div>
+                        <div class="parte3_4_chield">
+                            <div class="ladoDireitoInputCrianca">
+                                <label>Idade da criança:</label>
+                                <input class="form-control" name="IdadeCrianca_1" type="tel" asp-for="IdadeCrianca_1" />
+                            </div>
+                            <div>
+                                <label>Restrição Alimentar:</label>
+                                <input class="form-control" name="RestricaoAlimentar_1" type="text" asp-for="RestricaoAlimentar_1 " />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chield2" class="crianca_2">
+                        <div class="parte1_2_chield">
+                            <div class="ladoDireitoInputCrianca">
+                                <label>Nome da Criança: </label>
+                                <input class="form-control" name="crianca2" type="text" asp-for="NomeCrianca_2 " />
+                            </div>
+                            <div>
+                                <label>Data de Nascimento:</label>
+                                <input id="dateBorn2" class="form-control dataNascimentoInput" name="crianca2" type="date" asp-for="DataDeNascimento_2" onblur="validaNascimento(this)" />
+                                <span class="data2">Data inválida</span>
+                            </div>
+                        </div>
+                        <div class="parte3_4_chield">
+                            <div class="ladoDireitoInputCrianca">
+                                <label>Idade da criança:</label>
+                                <input class="form-control" name="crianca2" type="tel" asp-for="IdadeCrianca_2" />
+                            </div>
+                            <div>
+                                <label>Restrição Alimentar:</label>
+                                <input class="form-control" name="crianca2" type="text" asp-for="RestricaoAlimentar_2 " />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chield3" class="crianca_3">
+                        <div class="parte1_2_chield">
+                            <div class="ladoDireitoInputCrianca">
+                                <label>Nome da Criança: </label>
+                                <input class="form-control" name="crianca3" type="text" asp-for="NomeCrianca_3 " />
+                            </div>
+                            <div>
+                                <label>Data de Nascimento:</label>
+                                <input id="dateBorn3" class="form-control dataNascimentoInput" name="crianca3" type="date" asp-for="DataDeNascimento_3 " onblur="validaNascimento(this)" />
+                                <span class="data3">Data inválida</span>
+                            </div>
+                        </div>
+                        <div class="parte3_4_chield">
+                            <div class="ladoDireitoInputCrianca">
+                                <label>Idade da criança:</label>
+                                <input class="form-control" name="crianca3" type="tel" asp-for="IdadeCrianca_3" />
+                            </div>
+                            <div>
+                                <label>Restrição Alimentar:</label>
+                                <input class="form-control" name="crianca3" type="text" asp-for="RestricaoAlimentar_3 " />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="chield4" class="crianca_4">
+                        <div class="parte1_2_chield">
+                            <div class="ladoDireitoInputCrianca">
+                                <label>Nome da Criança: </label>
+                                <input class="form-control" name="crianca4" type="text" asp-for="NomeCrianca_4 " />
+                            </div>
+                            <div>
+                                <label>Data de Nascimento:</label>
+                                <input id="dateBorn4" class="form-control dataNascimentoInput" name="crianca4" type="date" asp-for="DataDeNascimento_4" onblur="validaNascimento(this)" />
+                                <span class="data4">Data inválida</span>
+                            </div>
+                        </div>
+                        <div class="parte3_4_chield">
+                            <div class="ladoDireitoInputCrianca">
+                                <label>Idade da criança:</label>
+                                <input class="form-control" name="crianca4" type="tel" asp-for="IdadeCrianca_4" />
+                            </div>
+                            <div>
+                                <label>Restrição Alimentar:</label>
+                                <input class="form-control" name="crianca4" type="text" asp-for="RestricaoAlimentar_4" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group divCasastro">
+                    <input type="submit" value="Cadastrar" class="btn btn-primary botaoCadastrar" id="cadastrar" /> @*value é o nome do botão para cadastrar*@
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script>
+    var numCriancas = $('#numeroDeCriancas').value;
+
+    $(document).ready(function () {
+
+    });
+
+    function mascara() {
+        $('#telefone').inputmask('(99) 99999-9999');
+        $('#telefoneEmergencial').inputmask('(99) 99999-9999');
+    }
+
+    const telefoneInput = document.getElementById('telefone');
+
+    telefoneInput.addEventListener('input', function (event) {
+        let telefone = event.target.value;
+        // Remove tudo o que não é dígito
+        telefone = telefone.replace(/\D/g, '');
+        // Adiciona parênteses e traço
+        telefone = telefone.replace(/(\d{2})(\d)/, '($1) $2');
+        telefone = telefone.replace(/(\d{5})(\d)/, '$1-$2');
+        // Atualiza o valor do input
+        event.target.value = telefone;
+    });
+
+    const cpfInput = document.getElementById('cpfResponsavel');
+
+    cpfInput.addEventListener('input', function (event) {
+        let cpf = event.target.value;
+        // Remove tudo o que não é dígito
+        cpf = cpf.replace(/\D/g, '');
+        // Adiciona pontos e traço
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+        // Atualiza o valor do input
+        event.target.value = cpf;
+    });
+
+    function validaNomeResponsavel() {
+        var nomeResponsavel_ = $('#nomeDoResponsavel').val();
+        if (nomeResponsavel_.split(" ").length < 2) {
+            $('#nomeDoResponsavel').addClass('input-invalido');
+            $('.nomeinvalido').css('display', 'flex');
+        }
+        else {
+            $('#nomeDoResponsavel').removeClass('input-invalido');
+            $('.nomeinvalido').css('display', 'none');
+        }
+
+    }
+
+    function validaCpf() {
+        var valorCPF = $('#cpfResponsavel').val().length;
+        if (valorCPF != 14) {
+            $('#cpfResponsavel').addClass('input-invalido');
+            $('.cpfinvalido').css('display', 'flex');
+        }
+        else {
+            $('#cpfResponsavel').removeClass('input-invalido');
+            $('.cpfinvalido').css('display', 'none');
+        }
+    }
+
+    const telefoneEmergencialInput = document.getElementById('telefoneEmergencial');
+
+    telefoneEmergencialInput.addEventListener('input', function (event) {
+        let telefoneEmergencial = event.target.value;
+
+        // Remove tudo o que não é dígito
+        telefoneEmergencial = telefoneEmergencial.replace(/\D/g, '');
+
+        // Adiciona parênteses e traço
+        telefoneEmergencial = telefoneEmergencial.replace(/(\d{2})(\d)/, '($1) $2');
+        telefoneEmergencial = telefoneEmergencial.replace(/(\d{5})(\d)/, '$1-$2');
+
+        // Atualiza o valor do input
+        event.target.value = telefoneEmergencial;
+    });
+
+    function validaContatoCelular() {
+        var contatoCelular = $("#telefone").val();
+
+        var dddRegex = /^\((51|53|54|55)\)\s*\d{5}-\d{4}$/;
+
+        if (!dddRegex.test(contatoCelular) || contatoCelular.length != 15) {
+            $("#telefone").addClass('input-invalido');
+            $('.contatoInvalido').css('display', 'flex');
+        }
+        else {
+            $("#telefone").removeClass('input-invalido');
+            $('.contatoInvalido').css('display', 'none');
+        }
+    }
+
+    function validaContatoCelularEmergencial() {
+        var contatoCelularEmergencial = $("#telefoneEmergencial").val();
+
+        var dddRegex = /^\((51|53|54|55)\)\s*\d{5}-\d{4}$/;
+
+        if (!dddRegex.test(contatoCelularEmergencial) || contatoCelularEmergencial.length != 15) {
+            $("#telefoneEmergencial").addClass('input-invalido');
+            $('.contatoEmergencialInvalido').css('display', 'flex');
+        }
+        else {
+            $("#telefoneEmergencial").removeClass('input-invalido');
+            $('.contatoEmergencialInvalido').css('display', 'none');
+        }
+    }
+
+    function validarEmail() {
+        var email = document.getElementById("email").value;
+        var regex = /^[^\s]+[^\s]+\.[^\s]+$/;
+
+        if (!regex.test(email)) {
+            alert("Por favor, digite um endereço de e-mail válido.");
+            document.getElementById("email").value = " ";
+            return false;
+
+        }
+        return true;
+    }
+
+    function validaConfirmacaoEmail() {
+        var email = document.getElementById("email").value;
+        var confirmacaoEmail = document.getElementById("confirma_email").value;
+
+        if (email != confirmacaoEmail) {
+
+            $('#confirma_email').addClass('input-invalido');
+            document.getElementById("email").value = " ";
+        }
+    }
+
+    function validaConfirmacaoSenha() {
+        var senha = document.getElementById("senha").value;
+        var confirmacaoSenha = document.getElementById("confirmacaoSenha").value;
+
+        if (senha != confirmacaoSenha) {
+
+            $('#confirmacaoSenha').addClass('input-invalido');
+            document.getElementById("senha").value = " ";
+        }
+    }
+
+    function adicionarCriancas() {
+        var numeroCriancas = $('#numeroDeCriancas').val();
+        if (numeroCriancas == "1") {
+            document.getElementById('inputsCad').style.display = 'flex';
+            document.getElementById('chield1').style.display = 'flex';
+        }
+        else if (numeroCriancas == "2") {
+            document.getElementById('inputsCad').style.display = 'flex';
+            document.getElementById('chield1').style.display = 'flex';
+            document.getElementById('chield2').style.display = 'flex';
+        }
+        else if (numeroCriancas == "3") {
+            document.getElementById('inputsCad').style.display = 'flex';
+            document.getElementById('chield1').style.display = 'flex';
+            document.getElementById('chield2').style.display = 'flex';
+            document.getElementById('chield3').style.display = 'flex';
+        }
+        else if (numeroCriancas == "4") {
+            document.getElementById('inputsCad').style.display = 'flex';
+            document.getElementById('chield1').style.display = 'flex';
+            document.getElementById('chield2').style.display = 'flex';
+            document.getElementById('chield3').style.display = 'flex';
+            document.getElementById('chield4').style.display = 'flex';
+        }
+    }
+
+    function validaNascimento(dateNasc) {
+        var id = $(dateNasc).attr("id");
+        //preciso deixar essa função dinâmica, para pegar valor de 1 ao 4 de modo correspondente ao que o usuário clicar
+        var dateChield1 = $("#" + id).val();
+        //var dateChield2 = $('#dateborn2').val();
+        //var dateChield3 = $('#dateborn3').val();
+        //var dateChield4 = $('#dateborn4').val();
+
+        var dateBorn = new Date(document.getElementById(id).value);
+
+        var minDate = new Date("2015-08-31"); // define a data mínima permitida
+        var maxDate = new Date("2019-12-31"); // define a data máxima permitida
+
+        if (dateBorn >= minDate && dateBorn <= maxDate) {
+            console.log("Data de nascimento válida");
+            $('.data1').css('display', 'none');
+        }
+        else {
+            console.log("Data de nascimento inválida");
+            $("#" + id).css('border', '2px solid red');
+            //document.getElementById("dateborn1").value = " ";
+            $('.data1').css('display', 'flex');
+        }
+
+    }
+
+</script>
+

@@ -1,0 +1,47 @@
+﻿@model SiteEncantadas.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<head>
+    @* <link rel="stylesheet" href="~/css/style_Reserve.css" />*@
+    <link rel="stylesheet" href="~/css/style_Login.css" />
+</head>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+@* mudei versão aqui do jquery *@
+
+<h1>Login</h1>
+<div>
+    <form asp-action="Logar" asp-controller="Login" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div>
+            <label asp-for="Login" class="labelLogin">
+                Login
+            </label>
+            <input id="login" name="Login" />
+        </div>
+        <div>
+            <label label asp-for="Senha" class="labelLogin">
+                Senha
+            </label>
+            <input id="senha" name="Senha" />
+        </div>
+        <button type="submit" value="Logar">Logar</button>
+    </form>
+</div>
+
+
+<script>
+
+</script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+

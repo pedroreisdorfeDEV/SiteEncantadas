@@ -1,0 +1,118 @@
+﻿@using SiteEncantadas.Data.Connections
+@using WebEncantadas;
+@using System.Configuration;
+@using System.Data.SqlClient;
+
+
+@{
+    ViewData["Title"] = "Ingresso";
+}
+
+@{
+    var conexao = new ConnectionManager();
+    var connection_ = conexao.GetConnection();
+    connection_.Open();
+    var command = new SqlCommand("SELECT num_mesa, valor_cadeira FROM dbo.reserva_ingressos WHERE id = 1", connection_);
+    decimal valor_cadeira = 0;
+
+    int num_mesa = 0;
+    var valores_cadeira = new Dictionary<int, decimal>();
+    var reader = command.ExecuteReader(); // função é chamada no objeto SqlCommand para executar a consulta SQL e retornar um objeto SqlDataReader que pode ser usado para ler as linhas do resultado da consulta.
+    while (reader.Read()) //A instrução if verifica se há alguma linha no resultado da consulta usando o método Read() do objeto SqlDataReader. Se houver pelo menos uma linha, o valor da coluna "valor_cadeira" é lido na variável "valor_cadeira" usando o método GetDecimal() do objeto SqlDataReader.
+    {
+        num_mesa = reader.GetInt32(0);
+        valor_cadeira = reader.GetDecimal(1); ; // valor da cadeira
+                                                // use a variável valor para exibir o valor na sua página HTML
+        valores_cadeira[num_mesa] = valor_cadeira;
+    }
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/style_Reserva.css" />
+</head>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
+@* mudei versão aqui do jquery *@
+
+<h1>Reserva de ingressos</h1>
+
+<div class="salaoMesas">
+
+    <div class="divisao_1">
+        <div id="mesa_circular">
+            @for (int i = 1; i <= 8; i++)
+            {
+                <button id="cadeira-@i" class="assento-@i cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="1">@i</button>
+            }
+        </div>
+
+        <div id="mesa_circular2">
+            @for (int i = 1; i <= 8; i++)
+            {
+                <button id="cadeira-@i" class="assento-@i cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="2">@i</button>
+            }
+        </div>
+    </div>
+
+    <div class="divisao_2">
+        <div id="mesa_circular3">
+            @for (int i = 1; i <= 8; i++)
+            {
+                <button id="cadeira-@i" class="assento-@i cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="3">@i</button>
+            }
+        </div>
+
+        <div id="mesa_circular4">
+            @for (int i = 1; i <= 8; i++)
+            {
+                <button id="cadeira-@i" class="assento-@i cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="4">@i</button>
+            }
+        </div>
+    </div>
+
+    <div>
+        <div>
+            Valor total:
+            <span id="totalCompra"></span>
+
+
+        </div>
+    </div>
+</div>
+
+<p>O valor da mesa é @valor_cadeira.</p>
+
+
+<script>
+
+
+    function cadeiraSelecionada(botao) {
+        botao.classList.toggle("selecionada"); // faz com que adicione class "selecionada" caso a mesma não exista. Caso clicar no botão de novo e a class "selecionada" existir, eu removo ela.
+        atualizarValorTotal();
+    }
+
+    function atualizarValorTotal() {
+        var numero_deCadeiras = $('.cadeira.selecionada').length; // obtém o número de cadeiras selecionadas
+        $.ajax({
+            url: '@Url.Action("CalcularValorTotal", "Pagamento")',
+            data: { numero_deCadeiras: numero_deCadeiras },
+            success: function (data) {
+                $('#totalCompra').html('R$ ' + data); // atualiza o valor total na tela
+            }
+        });
+    }
+
+    $(function () {
+        atualizarValorTotal(); // atualiza o valor total na página carregada
+    });
+
+</script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+

@@ -1,0 +1,108 @@
+﻿.input-invalido {
+    border: 1px solid red;
+}
+
+.cpfinvalido, .nomeinvalido, .contatoInvalido, .contatoEmergencialInvalido {
+    display: none;
+    z-index: 2000;
+    position: absolute;
+    color: white;
+}
+
+.botaoCadastrar {
+    background-color: #116795;
+}
+
+    .botaoCadastrar:disabled {
+        background-color: #7f7d7b;
+    }
+
+.divCasastro {
+    margin-top: 1rem;
+}
+
+.divisoesCadastro {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.registers {
+    border: 1px solid black;
+    height: auto;
+    border-radius: 5px;
+    padding: 2rem;
+    width: 31rem;
+    margin: auto;
+}
+
+.ladoEsquerdoDoCadastro {
+    margin-right: 1rem;
+}
+
+.row {
+    margin-left: 0px;
+}
+
+#numeroDeCriancas {
+    border-radius: 5px;
+    border: 1px solid black;
+    width: 5rem;
+}
+
+.botaoAdicionar {
+    border-radius: 5px;
+    font-size: .8rem;
+    background-color: green;
+    color: white;
+    border: none;
+}
+
+body {
+    background-image: url('/fotoTelaCadastro.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.tituloCadastro {
+    color: white;
+}
+
+
+label {
+    color: white;
+}
+
+#inputsCad {
+    display: none;
+    flex-direction: column;
+}
+
+
+.parte1_2_chield, .parte3_4_chield {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+}
+
+#chield1, #chield2, #chield3, #chield4 {
+    display: none;
+    flex-direction: column;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.dataNascimentoInput {
+    width: 12rem;
+}
+
+.ladoDireitoInputCrianca {
+    margin-right: 1rem;
+}
+
+.data1, .data2, .data3, .data4 {
+    display: none;
+    color: white;
+}
