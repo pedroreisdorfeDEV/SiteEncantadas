@@ -4,7 +4,9 @@ namespace SiteEncantadas.Models.ViewModels
 {
     public class CadastroViewModel
     {
-        //Cadastro responsável
+        public CadastroViewModel()
+        {
+        }
 
         [Key]
         [Display(Name = "id")]

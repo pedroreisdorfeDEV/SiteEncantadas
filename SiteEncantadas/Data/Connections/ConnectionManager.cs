@@ -5,7 +5,7 @@ namespace SiteEncantadas.Data.Connections
 {
     public class ConnectionManager : IConnectionManager
     {
-        private static string stringDeConexao = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=DB_Encantadas_teste;Data Source=LAPTOP-8RL84DG9\MSSQLSERVER01";
+        private static string stringDeConexao = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=DB_Encantadas_teste;Data Source=LAPTOP-8RL84DG9\MSSQLSERVER01;Encrypt=False;";
 
         public static SqlConnection connection = null;
 

@@ -3,18 +3,25 @@ using SiteEncantadas.Business.LoginService;
 using SiteEncantadas.Data.Connections;
 using SiteEncantadas.Data.Contexts;
 using SiteEncantadas.Helper.Session;
+using SiteEncantadas.UseCase.UsuarioUseCase.Services.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-// Add DbContext configuration
 builder.Services.AddDbContext<Contexto>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=DB_Encantadas_teste;Data Source=LAPTOP-8RL84DG9\MSSQLSERVER01;Encrypt=False;"));
+
+// Add DbContext configuration
+//builder.Services.AddDbContext<Contexto>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add singleton services
 builder.Services.AddSingleton<IConnectionManager, ConnectionManager>();
-//builder.Services.AddSingleton<IContextData, ContextDataSqlServer>();
+builder.Services.AddSingleton<IDataBaseConnectionFactory, DbConnectionFactory>();
+builder.Services.AddSingleton<IUsuarioRepository, UsuarioRepository>();
+
+builder.Services.AddSingleton<IContextData, ContextDataSqlServer>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add scoped services
