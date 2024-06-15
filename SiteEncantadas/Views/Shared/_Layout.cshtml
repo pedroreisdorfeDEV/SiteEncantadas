@@ -24,8 +24,24 @@
                 <div class="container">
                     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                         <ul class="navbar-nav flex-grow-1 linksCabecalho">
+
                             <li class="nav-item">
-                                <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Home" asp-action="Index">Página Inicial</a>
+                                @if (Model != null)
+                                {
+                                    @if (Model.Cadastro != null)
+                                    {
+                                        <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Home" asp-action="Index">@Model.Cadastro.NomeResponsavel</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Home" asp-action="Index">Página Inicial</a>
+                                    }
+                                }
+                                @if (Model == null)
+                                {
+                                    <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Home" asp-action="Index">Página Inicial</a>
+                                }
+                              
                             </li>
                             <li class="nav-item">
                                 @*Ingresso é o nome da minha controller e Reserve é a função chamada da controller. Mas a função action precisa ser nome da view em Views*@

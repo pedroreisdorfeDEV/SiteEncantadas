@@ -75,6 +75,7 @@ body {
 
 .linksCabecalho {
     color: white !important;
+    justify-content: space-between;
 }
 
 .nav-item {

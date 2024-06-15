@@ -20,27 +20,17 @@ namespace SiteEncantadas.Business.LoginService
 
         public async Task<Usuario> ValidarUsuario(string login, string senha)
         {
-
             LoginViewModel loginViewModel = new LoginViewModel();
             loginViewModel.Login = login;
             loginViewModel.Senha = senha;
 
             Usuario usuario = new Usuario();
 
-            //CadastroViewModel cadastroViewModel = await _usuarioRepository.ObterUsuario(login, senha);
+            CadastroViewModel cadastro = await _usuarioRepository.ObterUsuario(login, senha);
 
-            List<CadastroViewModel> listaCasdastros = _context.Cadastro.ToList();
-
-            foreach (var item in listaCasdastros)
-            {
-                if (item.Email == login && item.Senha == senha)
-                {
-                    usuario.Login = login;
-                    usuario.Senha = senha;
-                    usuario.Cadastro = item;
-                    break;
-                }
-            }
+            usuario.Cadastro = cadastro;
+            usuario.Login = login;
+     
             return usuario;
 
         }

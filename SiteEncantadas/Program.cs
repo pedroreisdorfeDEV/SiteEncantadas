@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using SiteEncantadas.Business.CadastroService;
 using SiteEncantadas.Business.LoginService;
 using SiteEncantadas.Data.Connections;
 using SiteEncantadas.Data.Contexts;
 using SiteEncantadas.Helper.Session;
+using SiteEncantadas.UseCase.CadastroUseCase.Services.Repositories;
 using SiteEncantadas.UseCase.UsuarioUseCase.Services.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,13 +22,14 @@ builder.Services.AddDbContext<Contexto>(options =>
 builder.Services.AddSingleton<IConnectionManager, ConnectionManager>();
 builder.Services.AddSingleton<IDataBaseConnectionFactory, DbConnectionFactory>();
 builder.Services.AddSingleton<IUsuarioRepository, UsuarioRepository>();
-
+builder.Services.AddSingleton<ICadastroRepository, CadastroRepository>();
 builder.Services.AddSingleton<IContextData, ContextDataSqlServer>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add scoped services
 builder.Services.AddScoped<ISessao, Sessao>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<ICadastroService, CadastroService>();
 
 // Add session configuration
 builder.Services.AddSession(options =>

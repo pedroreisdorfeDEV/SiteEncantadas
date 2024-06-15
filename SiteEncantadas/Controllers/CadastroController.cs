@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SiteEncantadas.Business.CadastroService;
 using SiteEncantadas.Data.Contexts;
 using SiteEncantadas.Helper.Session;
 using SiteEncantadas.Models.Entities;
@@ -11,14 +12,16 @@ namespace WebEncantadas.Controllers
     {
         private readonly Contexto _context;
         private readonly ISessao _sessao;
+        private readonly ICadastroService _cadastroService;
 
-        public CadastroController(Contexto context, ISessao sessao)
+        public CadastroController(Contexto context, ISessao sessao, ICadastroService cadastroService)
         {
             _context = context;
             _sessao = sessao;
+            _cadastroService = cadastroService;
         }
 
-        public IActionResult Cadastro()
+        public IActionResult Create()
         {
             Usuario usuario = _sessao.BuscarSessaoUsuario();
             if (usuario != null)
@@ -39,16 +42,24 @@ namespace WebEncantadas.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create_([Bind("id, NomeResponsavel,CPF,Email,ConfirmacaoEmail,Contato,ContatoEmergencial,NomeCrianca_1,IdadeCrianca_1,DataDeNascimento_1,RestricaoAlimentar_1,NomeCrianca_2,IdadeCrianca_2,DataDeNascimento_2,RestricaoAlimentar_2,NomeCrianca_3,IdadeCrianca_3,DataDeNascimento_3,RestricaoAlimentar_3,NomeCrianca_4,IdadeCrianca_4,DataDeNascimento_4,RestricaoAlimentar_4, Senha")] CadastroViewModel cadastro)
+        public async Task<IActionResult> Create_(CadastroViewModel cadastro)
         {
             // retorno da View precisa ser revisto
             if (ModelState.IsValid)
             {
+                bool emailJaExistente = await _cadastroService.VerificarEmailCadastro(cadastro.Email);
 
-                _context.Add(cadastro);
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction("Login");
+                if(emailJaExistente == false)
+                {
+                    _context.Add(cadastro);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    // mostrar popUp de email já cadastrado
+                    return RedirectToAction("Login");
+                }
             }
             return View(cadastro);
         }
