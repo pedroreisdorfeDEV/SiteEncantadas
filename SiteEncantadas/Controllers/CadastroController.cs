@@ -21,7 +21,7 @@ namespace WebEncantadas.Controllers
             _cadastroService = cadastroService;
         }
 
-        public IActionResult Create()
+        public IActionResult Cadastro()
         {
             Usuario usuario = _sessao.BuscarSessaoUsuario();
             if (usuario != null)
@@ -44,24 +44,20 @@ namespace WebEncantadas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create_(CadastroViewModel cadastro)
         {
-            // retorno da View precisa ser revisto
-            if (ModelState.IsValid)
-            {
-                bool emailJaExistente = await _cadastroService.VerificarEmailCadastro(cadastro.Email);
+            bool emailJaExistente = await _cadastroService.VerificarEmailCadastro(cadastro.Email);
 
-                if(emailJaExistente == false)
-                {
-                    _context.Add(cadastro);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Login");
-                }
-                else
-                {
-                    // mostrar popUp de email já cadastrado
-                    return RedirectToAction("Login");
-                }
+            if (emailJaExistente == false)
+            {
+                _context.Add(cadastro);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
             }
-            return View(cadastro);
+            else
+            {
+                // mostrar popUp de email já cadastrado
+                return RedirectToAction("Index", "Home");
+            }
+
         }
     }
 }
