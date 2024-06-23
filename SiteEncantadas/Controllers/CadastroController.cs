@@ -44,6 +44,8 @@ namespace WebEncantadas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create_(CadastroViewModel cadastro)
         {
+            // precisa de tratamento de erro ao se cadastrar
+
             bool emailJaExistente = await _cadastroService.VerificarEmailCadastro(cadastro.Email);
 
             if (emailJaExistente == false)
@@ -54,8 +56,11 @@ namespace WebEncantadas.Controllers
             }
             else
             {
-                // mostrar popUp de email já cadastrado
-                return RedirectToAction("Index", "Home");
+                Usuario usuario = null;
+                ViewBag.ErrorMessage = "Email já cadastrado!";
+                return View("Cadastro", usuario);
+                //// mostrar popUp de email já cadastrado
+                //return RedirectToAction("Index", "Home");
             }
 
         }

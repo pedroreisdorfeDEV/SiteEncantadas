@@ -1,7 +1,10 @@
 ﻿@model SiteEncantadas.Models.ViewModels.CadastroViewModel
 
-@{
+@* @{
     ViewData["Title"] = "Cadastrto";
+} *@
+@{
+    ViewBag.Title = "Cadastro";
 }
 
 <style>
@@ -11,12 +14,14 @@
 
 <head>
     <script src="~/js/cadastro.js" asp-append-version="true"></script>
+    <script src="~/js/PopUpDefault.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/google-libphonenumber/3.2.16/libphonenumber.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/3.5.1/jquery.maskedinput.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
-    <link rel="stylesheet" href="~/css/style_Cadastro.css" />
+    <link rel="stylesheet" href="~/css/style_cadastro.css" />
+
 </head>
 
 <body>
@@ -76,7 +81,7 @@
                     </div>
                 </div>
 
-                <div>
+                <div class="divAdicionarCrianca">
                     <label>Quantas crianças você irá levar?</label>
                     <input id="numeroDeCriancas" name="numeroDeCriancas" />
                     <button onclick="adicionarCriancas();" class="botaoAdicionar">Adicionar</button>
@@ -181,7 +186,7 @@
                 </div>
 
                 <div class="form-group divCasastro">
-                    <input type="submit" value="Cadastrar" class="btn btn-primary botaoCadastrar" id="cadastrar" /> @*value é o nome do botão para cadastrar*@
+                    <input onclick="validarEmailCadastro()" type="submit" value="Cadastrar" class="btn btn-primary botaoCadastrar" id="cadastrar" /> @*value é o nome do botão para cadastrar*@
                 </div>
             </form>
         </div>
@@ -191,6 +196,10 @@
 @*<div>
     <a asp-action="Index">Back to List</a>
 </div>*@
+@if (ViewBag.ErrorMessage != null)
+{
+    @await Html.PartialAsync("PopUp")
+}
 
 @section Scripts {
     @{
@@ -198,7 +207,19 @@
     }
 }
 
-<script>
+<script type="text/javascript">
+
+    // function validarEmailCadastro(){
+    //     debugger;
+    //     PopUp({
+    //         mensagem: "teste",
+    //         TipoMsg: TipoMsg.AVISO,
+    //         fnConfirma: function(){
+    //             location.reload();
+    //         }
+    //     })
+    // }
+
     var numCriancas = $('#numeroDeCriancas').value;
 
     $(document).ready(function () {

@@ -1,12 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SiteEncantadas.Helper.Session;
+using SiteEncantadas.Models.Entities;
 
 namespace SiteEncantadas.Controllers
 {
     public class FotosVideosController : Controller
     {
-        public IActionResult Index()
+        private readonly ISessao _sessao;
+
+        public FotosVideosController(ISessao sessao)
         {
-            return View();
+            _sessao = sessao;
+        }
+
+        public IActionResult FotosVideos()
+        {
+            Usuario usuario = _sessao.BuscarSessaoUsuario();
+            if (usuario != null)
+            {
+                ViewBag.UsuarioLogado = true;
+            }
+            else
+            {
+                ViewBag.UsuarioLogado = false;
+            }
+            return View(usuario);
         }
     }
 }

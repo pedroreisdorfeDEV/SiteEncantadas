@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<style>
+    .corpoPopUp {
+        background-color: white;
+        margin: auto;
+        position: absolute;
+        bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 18%;
+        height: 18%;
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border: 1px solid black;
+        border-radius: .25rem;
+    }
+
+    .botaoEntendido{
+        background-color: #116795;
+    }
+</style>
+<body>
+    <div id ="popup" class="corpoPopUp">
+        <div>
+            <p>@ViewBag.ErrorMessage</p>
+        </div>
+        <div>
+            <button  onclick="closePopup()" class="btn btn-primary botaoEntendido">Entendido</button>
+        </div>
+
+    </div>
+
+    <script>
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
