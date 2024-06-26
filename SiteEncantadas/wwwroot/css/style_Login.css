@@ -1,0 +1,12 @@
+﻿.botaoLogar {
+    background-color: #116795;
+    border-color: #1861ac;
+    color: white;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.inputLoginSenha {
+    border-radius: 6px;
+    width: 13rem;
+}
