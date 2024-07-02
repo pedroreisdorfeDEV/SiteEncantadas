@@ -41,6 +41,7 @@
     margin-bottom: 11rem;
     border-radius: 12px;
     z-index: 2000;
+    margin-bottom: 16rem;
 }
 
 .assento-2 {
@@ -53,6 +54,9 @@
     margin-left: 7rem;
     border-radius: 12px;
     z-index: 2000;
+    margin-left: 16rem;
+    margin-bottom: 11rem;
+    margin-right: 4rem;
 }
 
 .assento-3 {
@@ -64,6 +68,7 @@
     margin-left: 11rem;
     border-radius: 12px;
     z-index: 2000;
+    margin-left: 16rem;
 }
 
 .assento-4 {
@@ -76,6 +81,8 @@
     margin-left: 7rem;
     border-radius: 12px;
     z-index: 2000;
+    margin-left: 13rem;
+    margin-top: 10rem;
 }
 
 .assento-5 {
@@ -87,6 +94,7 @@
     margin-top: 11rem;
     border-radius: 12px;
     z-index: 2000;
+    margin-top: 16rem;
 }
 
 .assento-6 {
@@ -99,6 +107,8 @@
     margin-right: 7rem;
     border-radius: 12px;
     z-index: 2000;
+    margin-top: 10rem;
+    margin-right: 13rem;
 }
 
 .assento-7 {
@@ -110,6 +120,7 @@
     margin-right: 11rem;
     border-radius: 12px;
     z-index: 2000;
+    margin-right: 16rem;
 }
 
 .assento-8 {
@@ -122,6 +133,8 @@
     margin-right: 7rem;
     border-radius: 12px;
     z-index: 2000;
+    margin-bottom: 11rem;
+    margin-right: 12rem;
 }
 
 .cadeira.selecionada {
@@ -148,6 +161,7 @@
     align-items: center;
     justify-content: center;
     margin-top: 3rem;
+    margin-left: 13rem;
 }
 
 #mesa_circular3 {
@@ -160,6 +174,7 @@
     align-items: center;
     justify-content: center;
     margin-top: 1rem;
+    margin-left: 29rem;
 }
 
 #mesa_circular4 {
@@ -172,6 +187,7 @@
     align-items: center;
     justify-content: center;
     margin-top: 3rem;
+    margin-left: 13rem;
 }
 
 .divisao_1 {
@@ -183,5 +199,4 @@
 .divisao_2 {
     display: flex;
     flex-direction: column;
-    margin-left: 4rem;
 }
