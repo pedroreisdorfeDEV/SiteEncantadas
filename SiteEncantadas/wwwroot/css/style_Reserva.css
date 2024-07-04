@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 3rem;
 }
 
 .quadradoMaior {
@@ -143,10 +143,10 @@
 }
 
 .salaoMesas {
-    background-color: white;
-    border: 2px solid #80bca3;
-    width: 77rem;
-    height: 33rem;
+    background-color: #ca976970;
+    border: 2px solid black;
+    width: 82rem;
+    height: 36rem;
     display: flex;
     /* margin-left: 7rem;*/
 }
@@ -160,7 +160,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 3rem;
+    margin-top: 2rem;
     margin-left: 13rem;
 }
 
@@ -173,7 +173,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 3rem;
     margin-left: 29rem;
 }
 
@@ -186,7 +186,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 3rem;
+    margin-top: 2rem;
     margin-left: 13rem;
 }
 
