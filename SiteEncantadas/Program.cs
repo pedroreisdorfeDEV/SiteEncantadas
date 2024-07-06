@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using SiteEncantadas.Business.CadastroService;
 using SiteEncantadas.Business.LoginService;
+using SiteEncantadas.Business.ReservaService;
 using SiteEncantadas.Data.Connections;
 using SiteEncantadas.Data.Contexts;
 using SiteEncantadas.Helper.Session;
 using SiteEncantadas.UseCase.CadastroUseCase.Services.Repositories;
+using SiteEncantadas.UseCase.ReservaUseCase.Services.Repositories;
 using SiteEncantadas.UseCase.UsuarioUseCase.Services.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,8 +23,9 @@ builder.Services.AddDbContext<Contexto>(options =>
 // Add singleton services
 builder.Services.AddSingleton<IConnectionManager, ConnectionManager>();
 builder.Services.AddSingleton<IDataBaseConnectionFactory, DbConnectionFactory>();
-builder.Services.AddSingleton<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddSingleton<ICadastroRepository, CadastroRepository>();
+//builder.Services.AddSingleton<IUsuarioRepository, UsuarioRepository>();
+//builder.Services.AddSingleton<ICadastroRepository, CadastroRepository>();
+//builder.Services.AddSingleton<IReservaRepository, ReservaRepository>();
 builder.Services.AddSingleton<IContextData, ContextDataSqlServer>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -30,6 +33,11 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<ISessao, Sessao>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<ICadastroService, CadastroService>();
+builder.Services.AddScoped<IReservaService, ReservaService>();
+//
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<ICadastroRepository, CadastroRepository>();
+builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
 
 // Add session configuration
 builder.Services.AddSession(options =>

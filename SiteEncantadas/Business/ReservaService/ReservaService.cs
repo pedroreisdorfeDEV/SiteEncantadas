@@ -1,23 +1,24 @@
-﻿using SiteEncantadas.Helper.Session;
+﻿using SiteEncantadas.Data.Contexts;
+using SiteEncantadas.Helper.Session;
 using SiteEncantadas.Models.Entities;
-using SiteEncantadas.Models.Entities.Reserva;
+using SiteEncantadas.UseCase.ReservaUseCase.Services.Repositories;
 
 namespace SiteEncantadas.Business.ReservaService
 {
     public class ReservaService : IReservaService
     {
         private readonly IReservaRepository _reservaRepository;
-        private readonly ISessao _sessao;
+        //private readonly Contexto _context;
 
-        public ReservaService(IReservaRepository reservaRepository, ISessao sessao)
+        public ReservaService(IReservaRepository reservaRepository)
         {
             _reservaRepository = reservaRepository;
-            _sessao = sessao;
         }
+
 
         public async Task<Mesas> BuscarEconstruirMesas()
         {
-            List<Reserva_ingressos> mesasDB = await _reservaRepository.BuscarMesas();
+            List<Models.Entities.Reserva.Reserva_ingressos> mesasDB = await _reservaRepository.BuscarMesas();
 
             Mesas mesas = new Mesas();
 
@@ -45,6 +46,20 @@ namespace SiteEncantadas.Business.ReservaService
             }
 
             return mesas;
+        }
+
+        public async Task<List<int>> ObterCadeirasReservadas()
+        {
+            List<int> listaCadeirasReservadas = new List<int>();
+
+            listaCadeirasReservadas = await _reservaRepository.ObterCadeirasReservadas();
+
+            if (listaCadeirasReservadas == null)
+            {
+                listaCadeirasReservadas.Add(0);
+            }
+
+            return listaCadeirasReservadas;
         }
     }
 }

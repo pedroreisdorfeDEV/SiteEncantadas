@@ -1,16 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SiteEncantadas.Business.ReservaService;
 using SiteEncantadas.Helper.Session;
 using SiteEncantadas.Models.Entities;
+using System.ComponentModel;
 
 namespace SiteEncantadas.Controllers
 {
     public class IngressoController : Controller
     {
         private readonly ISessao _sessao;
+        private readonly IReservaService _reservaService;
 
-        public IngressoController(ISessao sessao)
+        public IngressoController(ISessao sessao, IReservaService reservaService)
         {
             _sessao = sessao;
+            _reservaService = reservaService;   
         }
 
         public IActionResult Reserva()
@@ -25,6 +29,13 @@ namespace SiteEncantadas.Controllers
                 ViewBag.UsuarioLogado = false;
             }
             return View(usuario);
+        }
+
+        public async Task<List<int>> ObterCadeirasReservadas()
+        {
+            List<int> listaIDcadeirasReservadas = await _reservaService.ObterCadeirasReservadas();
+
+            return listaIDcadeirasReservadas;
         }
     }
 }

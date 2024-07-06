@@ -39,6 +39,7 @@
 <div class="salaoMesas">
 
     <div class="divisao_1">
+        @*preciso ajustar aqui id das cadeiras, pois precisam ser baseados ao que está no banco de dados*@
         <div id="mesa_circular">
             @for (int i = 1; i <= 8; i++)
             {
@@ -84,7 +85,28 @@
 
 
 <script>
+    // antes de carregar a página, preciso verificar se poltrona já não está vendida. Se já está vendida, então tenho que desabilitar ela
 
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("ObterCadeirasReservadas", "Ingresso")',
+            method: 'GET',
+            success: function (data) {
+                // Processa a resposta e bloqueia as cadeiras reservadas
+                debugger;
+                if (data.length > 0) {
+                    data.forEach(function (idCadeiraReservada) {
+                        $('#cadeira-' + idCadeiraReservada).prop('disabled', true);
+                     
+                    });
+                }
+               
+            },
+            error: function (xhr, status, error) {
+                console.error('Erro ao obter o status das cadeiras:', error);
+            }
+        });
+    });
 
     function cadeiraSelecionada(botao) {
         botao.classList.toggle("selecionada"); // faz com que adicione class "selecionada" caso a mesma não exista. Caso clicar no botão de novo e a class "selecionada" existir, eu removo ela.
@@ -101,6 +123,7 @@
             }
         });
     }
+
 
     $(function () {
         atualizarValorTotal(); // atualiza o valor total na página carregada
