@@ -27,7 +27,6 @@ namespace SiteEncantadas.Controllers
             //se usuário estiver logado, redirecionar para a home
             if (_sessao.BuscarSessaoUsuario() != null)
             {
-                // TODO: mas quando entra nessa situação aqui, preciso trocar logar para botão sair
                 ViewBag.UsuarioLogado = true;
 
                 return RedirectToAction("Index", "Home");
@@ -49,13 +48,20 @@ namespace SiteEncantadas.Controllers
             // retorno da View precisa ser revisto
             if (ModelState.IsValid)
             {
-                Usuario usuario = await _loginService.ValidarUsuario(login, senha);
+                Usuario? usuario = await _loginService.ValidarUsuario(login, senha);
+
+                if (usuario == null)
+                {
+                    ViewBag.ErrorMessage = "Login incorreto!";
+                    return View("Login", null);
+                }
 
                 _sessao.CriarSessaoUsuario(usuario);
 
                 return RedirectToAction("Index", "Home");
             }
-            return View(login);
+            ViewBag.ErrorMessage = "Login incorreto!";
+            return View("Login", null);
         }
     }
 }

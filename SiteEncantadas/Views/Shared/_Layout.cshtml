@@ -60,8 +60,20 @@
                                 <a class="nav-link text-dark linkColor" asp-area="" asp-controller="FotosVideos" asp-action="FotosVideos">Fotos e Vídeos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Cadastro" asp-action="Cadastro">Cadastre-se</a>
+                                @if (Model == null)
+                                {              
+                                    <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Cadastro" asp-action="Cadastro">Cadastre-se</a>                       
+                                }
+                                else
+                                {
+                                    @if (Model.Cadastro == null)
+                                    {
+                                        <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Cadastro" asp-action="Cadastro">Cadastre-se</a>
+                                 
+                                    }
+                                }
                             </li>
+                       
                             <li class="nav-item">
                                 <a class="nav-link text-dark linkColor" asp-area="" asp-controller="Duvidas" asp-action="Duvidas">Dúvidas Frequentes</a>
                             </li>

@@ -92,12 +92,11 @@
             url: '@Url.Action("ObterCadeirasReservadas", "Ingresso")',
             method: 'GET',
             success: function (data) {
-                // Processa a resposta e bloqueia as cadeiras reservadas
-                debugger;
+             
                 if (data.length > 0) {
                     data.forEach(function (idCadeiraReservada) {
                         $('#cadeira-' + idCadeiraReservada).prop('disabled', true);
-                     
+                        $('#cadeira-' + idCadeiraReservada).addClass("reservada");
                     });
                 }
                

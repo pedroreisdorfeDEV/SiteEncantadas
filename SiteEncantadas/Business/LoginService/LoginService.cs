@@ -18,7 +18,7 @@ namespace SiteEncantadas.Business.LoginService
             _usuarioRepository = usuarioRepository;
         }
 
-        public async Task<Usuario> ValidarUsuario(string login, string senha)
+        public async Task<Usuario?> ValidarUsuario(string login, string senha)
         {
             LoginViewModel loginViewModel = new LoginViewModel();
             loginViewModel.Login = login;
@@ -27,7 +27,10 @@ namespace SiteEncantadas.Business.LoginService
             Usuario usuario = new Usuario();
 
             CadastroViewModel cadastro = await _usuarioRepository.ObterUsuario(login, senha);
-
+            if(cadastro == null)
+            {
+                return null;
+            }
             usuario.Cadastro = cadastro;
             usuario.Login = login;
      
