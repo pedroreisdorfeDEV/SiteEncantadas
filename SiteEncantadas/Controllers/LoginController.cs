@@ -45,7 +45,6 @@ namespace SiteEncantadas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logar(string login, string senha)
         {
-            // retorno da View precisa ser revisto
             if (ModelState.IsValid)
             {
                 Usuario? usuario = await _loginService.ValidarUsuario(login, senha);

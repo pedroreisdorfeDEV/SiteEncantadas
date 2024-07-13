@@ -27,57 +27,112 @@
     }
 }
 
+@{
+    bool usuarioLogado = ViewBag.UsuarioLogado ?? false;
+}
+
 <head>
     <link rel="stylesheet" href="~/css/style_Reserva.css" />
 </head>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
+<style>
+    #mesa_circular {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .fila {
+        display: flex;
+        justify-content: center;
+        margin: 5px 0;
+    }
+
+    .cadeira {
+        margin: 0 5px;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 @* mudei versão aqui do jquery *@
 
 <h3>Reserva de ingressos</h3>
 
+
 <div class="salaoMesas">
 
     <div class="divisao_1">
-        @*preciso ajustar aqui id das cadeiras, pois precisam ser baseados ao que está no banco de dados*@
         <div id="mesa_circular">
-            @for (int i = 1; i <= 8; i++)
+        </div>
+        <div class="fila">
+            @for (int i = 1; i <= 4; i++)
             {
-                <button id="cadeira-@i" class="assento-@i cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="1">@i</button>
+                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="1">@i</button>
             }
         </div>
-
-        <div id="mesa_circular2">
-            @for (int i = 1; i <= 8; i++)
+        <div class="fila">
+            @for (int i = 5; i <= 8; i++)
             {
-                <button id="cadeira-@i" class="assento-@i cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="2">@i</button>
+                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="1">@i</button>
             }
         </div>
     </div>
 
     <div class="divisao_2">
-        <div id="mesa_circular3">
-            @for (int i = 1; i <= 8; i++)
+        <div id="mesa_circular2">
+        </div>
+        <div class="fila">
+            @for (int i = 9; i <= 12; i++)
             {
-                <button id="cadeira-@i" class="assento-@i cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="3">@i</button>
+                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="2">@i</button>
             }
         </div>
-
-        <div id="mesa_circular4">
-            @for (int i = 1; i <= 8; i++)
+        <div class="fila">
+            @for (int i = 13; i <= 16; i++)
             {
-                <button id="cadeira-@i" class="assento-@i cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="4">@i</button>
+                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="2">@i</button>
             }
         </div>
     </div>
 
-    <div>
-        <div>
-            Valor total:
-            <span id="totalCompra"></span>
-
-
+    <div class="divisao_3">
+        <div id="mesa_circular3">
         </div>
+        <div class="fila">
+            @for (int i = 17; i <= 20; i++)
+            {
+                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="3">@i</button>
+            }
+        </div>
+        <div class="fila">
+            @for (int i = 21; i <= 24; i++)
+            {
+                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="3">@i</button>
+            }
+        </div>
+    </div>
+
+    <div class="divisao_4">
+        <div id="mesa_circular4">
+        </div>
+        <div class="fila">
+            @for (int i = 25; i <= 28; i++)
+            {
+                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="4">@i</button>
+            }
+        </div>
+        <div class="fila">
+            @for (int i = 29; i <= 32; i++)
+            {
+                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="4">@i</button>
+            }
+        </div>
+    </div>
+</div>
+<div>
+    <div>
+        Valor total:
+        <span id="totalCompra"></span>
     </div>
 </div>
 
@@ -85,21 +140,20 @@
 
 
 <script>
-    // antes de carregar a página, preciso verificar se poltrona já não está vendida. Se já está vendida, então tenho que desabilitar ela
 
     $(document).ready(function () {
         $.ajax({
             url: '@Url.Action("ObterCadeirasReservadas", "Ingresso")',
             method: 'GET',
             success: function (data) {
-             
+
                 if (data.length > 0) {
                     data.forEach(function (idCadeiraReservada) {
                         $('#cadeira-' + idCadeiraReservada).prop('disabled', true);
                         $('#cadeira-' + idCadeiraReservada).addClass("reservada");
                     });
                 }
-               
+
             },
             error: function (xhr, status, error) {
                 console.error('Erro ao obter o status das cadeiras:', error);
@@ -107,9 +161,20 @@
         });
     });
 
+
+
     function cadeiraSelecionada(botao) {
-        botao.classList.toggle("selecionada"); // faz com que adicione class "selecionada" caso a mesma não exista. Caso clicar no botão de novo e a class "selecionada" existir, eu removo ela.
-        atualizarValorTotal();
+        var usuarioLogado = @usuarioLogado.ToString().ToLower();
+
+        if (usuarioLogado == false) {
+            alert("Usuário deslogado. Para iniciar processo de reserva, faça o login!");
+        }
+        else{
+            botao.classList.toggle("selecionada"); // faz com que adicione class "selecionada" caso a mesma não exista. Caso clicar no botão de novo e a class "selecionada" existir, eu removo ela.
+            atualizarValorTotal();
+        }
+       
+  
     }
 
     function atualizarValorTotal() {
@@ -123,9 +188,8 @@
         });
     }
 
-
     $(function () {
-        atualizarValorTotal(); // atualiza o valor total na página carregada
+        atualizarValorTotal(); 
     });
 
 </script>
