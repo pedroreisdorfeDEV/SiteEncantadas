@@ -36,21 +36,7 @@
 </head>
 
 <style>
-    #mesa_circular {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
 
-    .fila {
-        display: flex;
-        justify-content: center;
-        margin: 5px 0;
-    }
-
-    .cadeira {
-        margin: 0 5px;
-    }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -60,74 +46,77 @@
 
 
 <div class="salaoMesas">
-
-    <div class="divisao_1">
-        <div id="mesa_circular">
+    <div class="textoExplicativo">
+        Como segue abaixo, existem quatro opções de mesa.
+    </div>
+    <div class="textoExplicativo">
+        Selecione seus assentos de preferência para iniciar a reserva.
+    </div>
+    <div class="valorAssento">* R$ 200,00 por assento</div>
+    <div class="mesasPrincesas">
+  
+        <div class="divisao_1">
+            <button id="mesa_circular">Valente</button>
+            <div class="fila">
+                @for (int i = 1; i <= 4; i++)
+                {
+                    <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="1">@i</button>
+                }
+            </div>
+            <div class="fila">
+                @for (int i = 5; i <= 8; i++)
+                {
+                    <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="1">@i</button>
+                }
+            </div>
         </div>
-        <div class="fila">
-            @for (int i = 1; i <= 4; i++)
-            {
-                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="1">@i</button>
-            }
+        <div class="divisao_2">
+            <button id="mesa_circular2">Branca de Neve</button>
+            <div class="fila">
+                @for (int i = 9; i <= 12; i++)
+                {
+                    <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="2">@i</button>
+                }
+            </div>
+            <div class="fila">
+                @for (int i = 13; i <= 16; i++)
+                {
+                    <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="2">@i</button>
+                }
+            </div>
         </div>
-        <div class="fila">
-            @for (int i = 5; i <= 8; i++)
-            {
-                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this)" data-num-mesa="1">@i</button>
-            }
+        <div class="divisao_3">
+            <button id="mesa_circular3">Ariel</button>
+            <div class="fila">
+                @for (int i = 17; i <= 20; i++)
+                {
+                    <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="3">@i</button>
+                }
+            </div>
+            <div class="fila">
+                @for (int i = 21; i <= 24; i++)
+                {
+                    <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="3">@i</button>
+                }
+            </div>
+        </div>
+        <div class="divisao_4">
+            <button id="mesa_circular4">Bela</button>
+            <div class="fila">
+                @for (int i = 25; i <= 28; i++)
+                {
+                    <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="4">@i</button>
+                }
+            </div>
+            <div class="fila">
+                @for (int i = 29; i <= 32; i++)
+                {
+                    <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="4">@i</button>
+                }
+            </div>
         </div>
     </div>
-
-    <div class="divisao_2">
-        <div id="mesa_circular2">
-        </div>
-        <div class="fila">
-            @for (int i = 9; i <= 12; i++)
-            {
-                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="2">@i</button>
-            }
-        </div>
-        <div class="fila">
-            @for (int i = 13; i <= 16; i++)
-            {
-                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="2">@i</button>
-            }
-        </div>
-    </div>
-
-    <div class="divisao_3">
-        <div id="mesa_circular3">
-        </div>
-        <div class="fila">
-            @for (int i = 17; i <= 20; i++)
-            {
-                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="3">@i</button>
-            }
-        </div>
-        <div class="fila">
-            @for (int i = 21; i <= 24; i++)
-            {
-                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="3">@i</button>
-            }
-        </div>
-    </div>
-
-    <div class="divisao_4">
-        <div id="mesa_circular4">
-        </div>
-        <div class="fila">
-            @for (int i = 25; i <= 28; i++)
-            {
-                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="4">@i</button>
-            }
-        </div>
-        <div class="fila">
-            @for (int i = 29; i <= 32; i++)
-            {
-                <button id="cadeira-@i" class="cadeira" onclick="cadeiraSelecionada(this) " data-num-mesa="4">@i</button>
-            }
-        </div>
-    </div>
+ 
 </div>
 <div>
     <div>
@@ -135,8 +124,6 @@
         <span id="totalCompra"></span>
     </div>
 </div>
-
-<p>O valor da mesa é @valor_cadeira.</p>
 
 
 <script>

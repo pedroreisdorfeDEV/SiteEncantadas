@@ -1,60 +1,21 @@
-﻿#mesa_circular {
-    border: 2px solid black;
-    height: 14rem;
-    width: 14rem;
+﻿#mesa_circular, #mesa_circular2, #mesa_circular3, #mesa_circular4{
+    border: .5px solid #CC9971;
+    height: 7rem;
+    width: 7rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 3rem;
-
-    background-image: url('/Imagens/imagensMesaReserva/valente.jpg');
-    background-size: cover; /* Ajusta a imagem para cobrir toda a div */
+    margin-top: 1rem;
     background-position: center; /* Centraliza a imagem */
     background-repeat: no-repeat; /* Evita que a imagem se repita */
+    background-color: white;
 }
 
-#mesa_circular2 {
-    border: 2px solid black;
-    height: 14rem;
-    width: 14rem;
-    display: flex;
-    align-items: center;
+.valorAssento{
+    font-size: .9rem;
+    color: gray;
+    display:flex;
     justify-content: center;
-    margin-top: 3rem;
-    background-image: url('/Imagens/imagensMesaReserva/branca3.jpg');
-    background-size: cover; /* Ajusta a imagem para cobrir toda a div */
-    background-position: center; /* Centraliza a imagem */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
-}
-
-#mesa_circular3 {
-     background-color: #FFFFFF;
-    border: 2px solid black;
-    height: 14rem;
-    width: 14rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 3rem;
-    background-image: url('/Imagens/imagensMesaReserva/Ariel-removebg-preview.png');
-    background-size: cover; /* Ajusta a imagem para cobrir toda a div */
-    background-position: center; /* Centraliza a imagem */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
-}
-
-#mesa_circular4 {
-  /*  background-color: #FFFFFF;*/
-    border: 2px solid black;
-    height: 14rem;
-    width: 14rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 3rem;
-    background-image: url('/Imagens/imagensMesaReserva/Bela3.png');
-    background-size: cover; /* Ajusta a imagem para cobrir toda a div */
-    background-position: center; /* Centraliza a imagem */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
 }
 
 .quadradoMaior {
@@ -68,8 +29,14 @@
 .cadeira {
     border: 1px solid black;
     background-color: white;
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    border-radius: 4px;
 }
 
 
@@ -190,16 +157,17 @@
 }
 
 .salaoMesas {
-    background-color: #ca976970;
-    height: 36rem;
+    background-color: #fff;
+    height: 25rem;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
 }
 
 
 .divisao_1, .divisao_2, .divisao_3, .divisao_4 {
     display: flex;
     flex-direction: column;
+    padding-right: 2rem;
  
 }
 
@@ -210,10 +178,43 @@
 
 
 .backgroundValente {
-    background-image: url('/Imagens/imagensMesaReserva/valente.jpg');
-    background-size: cover; /* Ajusta a imagem para cobrir toda a div */
+    /*background-image: url('/Imagens/imagensMesaReserva/valente.jpg');*/
+    /*background-size: cover;*/ /* Ajusta a imagem para cobrir toda a div */
     background-position: center; /* Centraliza a imagem */
     background-repeat: no-repeat; /* Evita que a imagem se repita */
     width: 100%; /* Ajuste o tamanho conforme necessário */
     height: 400px; /* Ajuste o tamanho conforme necessário */
+}
+
+#mesa_circular {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fila {
+    display: flex;
+    justify-content: center;
+    margin: 5px 0;
+    margin-top: .7rem;
+}
+
+
+
+.mesasPrincesas {
+    display: flex;
+    flex-direction: row;
+  /*  border: .5px solid #CC9971;*/
+    height: 29rem;
+    margin: auto;
+}
+
+body {
+    background-color: white;
+}
+
+.qtdAssentos {
+    font-size: .8rem;
+    color: gray;
+    padding-top: .8rem;
 }
