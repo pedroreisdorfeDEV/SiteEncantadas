@@ -16,6 +16,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<Contexto>(options =>
     options.UseSqlServer(@"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=DB_Encantadas_teste;Data Source=LAPTOP-8RL84DG9\MSSQLSERVER01;Encrypt=False;"));
 
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+}); ;
+
 // Add DbContext configuration
 //builder.Services.AddDbContext<Contexto>(options =>
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -38,6 +44,8 @@ builder.Services.AddScoped<IReservaService, ReservaService>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ICadastroRepository, CadastroRepository>();
 builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
+
+
 
 // Add session configuration
 builder.Services.AddSession(options =>

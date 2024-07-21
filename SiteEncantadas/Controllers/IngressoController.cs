@@ -3,6 +3,7 @@ using SiteEncantadas.Business.ReservaService;
 using SiteEncantadas.Helper.Session;
 using SiteEncantadas.Models.Entities;
 using System.ComponentModel;
+using Newtonsoft.Json;
 
 namespace SiteEncantadas.Controllers
 {
@@ -36,6 +37,15 @@ namespace SiteEncantadas.Controllers
             List<int> listaIDcadeirasReservadas = await _reservaService.ObterCadeirasReservadas();
 
             return listaIDcadeirasReservadas;
+        }
+
+        [HttpPost]
+        public IActionResult ReservarIngressos([FromBody] List<int> listaPraReserva)
+        {
+            // Lógica para reservar as cadeiras
+            // ...
+
+            return Ok();
         }
     }
 }
