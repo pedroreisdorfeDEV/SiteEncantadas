@@ -204,9 +204,7 @@
 .mesasPrincesas {
     display: flex;
     flex-direction: row;
-  /*  border: .5px solid #CC9971;*/
-    height: 29rem;
-    margin: auto;
+    justify-content: center;
 }
 
 body {
@@ -233,9 +231,14 @@ body {
 }
 
 .botaoReservar {
-    background-color: #116795;
-    border-color: #1861ac;
-    color: white;
+    background-color: #baddef;
+    border: 1px solid #CC9971;
+    color: black;
     border-radius: 6px;
     margin-top: 1rem;
+}
+
+.disabled-button {
+    opacity: 0.5; /* Define a opacidade desejada */
+    cursor: not-allowed; /* Opcional: muda o cursor para indicar que o botão está desabilitado */
 }

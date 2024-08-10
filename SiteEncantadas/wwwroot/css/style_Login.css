@@ -1,7 +1,7 @@
 ﻿.botaoLogar {
-    background-color: #116795;
-    border-color: #1861ac;
-    color: white;
+    background-color: #baddef;
+    border: 1px solid #CC9971;
+    color: #0c0707e0;
     border-radius: 6px;
     margin-top: 1rem;
 }
@@ -14,5 +14,17 @@
 }
 
 .divLogin{
-    margin-bottom: .8rem;
+    margin-bottom: .65rem;
+}
+
+.titulo {
+    font-family: 'fonteOpenSans', fonteOpenSans;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+@font-face {
+    font-family: 'fonteOpenSans';
+    src: url('/fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }

@@ -9,5 +9,6 @@ namespace SiteEncantadas.Models.Entities
         public string Senha { get; set; }
         public CadastroViewModel Cadastro { get; set; }
         public List<Reserva_ingressos> ListaReservas { get; set; }
+        public double ValorApagar { get; set; }
     }
 }

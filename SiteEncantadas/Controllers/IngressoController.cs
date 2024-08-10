@@ -44,8 +44,9 @@ namespace SiteEncantadas.Controllers
         {
             // Lógica para reservar as cadeiras
             // ...
+            return RedirectToAction("IndexPagamento", "Pagamento");
 
-            return Ok();
+            //return Ok();
         }
     }
 }

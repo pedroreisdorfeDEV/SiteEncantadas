@@ -36,5 +36,12 @@ namespace SiteEncantadas.Helper.Session
         {
             httpContext_.HttpContext.Session.Remove("sessaoUsuarioLogado");
         }
+
+        public void AtualizarSessao(Usuario usuario)
+        {
+            UsuarioLogado = usuario;
+            string usuarioJson = JsonConvert.SerializeObject(usuario);
+            httpContext_.HttpContext.Session.SetString("sessaoUsuarioLogado", usuarioJson);
+        }
     }
 }

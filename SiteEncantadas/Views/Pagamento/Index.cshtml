@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/stylePagamento.css" />
+</head>
+
+<style>
+    .pagamentoClass {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .qrcode {
+        width: 8rem;
+    }
+
+    .textosPagamento {
+        color: gray;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
+    .botaoCopiaEcola {
+        background-color: #baddef;
+        border: 1px solid #CC9971;
+        color: black;
+        border-radius: 6px;
+        margin-top: 1rem;
+    }
+
+    .qrcodeCopiaEcola{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cronometro {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+        color: gray;
+    }
+</style>
+
+<div class="pagamentoClass">
+    <div class="titulo">Pagamento</div>
+    @if (ViewBag.Usuario != null)
+    {
+        <p>Total a pagar: R$ @ViewBag.Usuario.ValorApagar</p>
+    }
+    @* Adicionar cronometro *@
+    <div class="qrcodeCopiaEcola">
+        <div> <img src="@Url.Action("GenerateQrCode", "Pagamento", new { amount = 200.00 })" alt="QR Code" class="qrcode" /></div>
+        <div>
+            <button id="" class="botaoCopiaEcola btn btn-three" onclick="">Copia e cola</button>
+        </div>
+        <div id="cronometro" class="cronometro">
+            Tempo restante: <span id="tempoRestante">02:00</span> <!-- Inicialmente configurado para 5 minutos -->
+        </div>
+    </div>
+
+    <div class="textosPagamento">
+        <div>
+            Finalize o pagamento para concluir sua reserva.
+        </div>
+        <div>
+            Aponte a câmera para QRCode ou use método copia e cola para realizar o pagamento
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function iniciarCronometro(duracao, display) {
+        var timer = duracao, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.textContent = minutes + ":" + seconds;
+
+            if (--timer < 0) {
+                timer = 0;
+                // Aqui você pode adicionar código para fazer algo quando o tempo acabar
+                // Como desabilitar o botão de pagamento, ou mostrar uma mensagem.
+            }
+        }, 1000);
+    }
+
+    window.onload = function () {
+        var cincoMinutos = 60 * 2, // 2 mintos em segundos
+            display = document.querySelector('#tempoRestante'); // Elemento onde o tempo será exibido
+        iniciarCronometro(cincoMinutos, display);
+    };
+</script>

@@ -1,1 +1,68 @@
-﻿
+﻿@using SiteEncantadas.Data.Connections
+@using WebEncantadas;
+@using System.Configuration;
+@using System.Data.SqlClient;
+
+
+@{
+    ViewData["Title"] = "IndexPagamento";
+}
+
+
+
+<head>
+    <link rel="stylesheet" href="~/css/style_Reserva.css" />
+</head>
+
+<style>
+
+    .btn-three:hover::before {
+        opacity: 0;
+        transform: scale(0.5,0.5);
+    }
+
+</style>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+@* mudei versão aqui do jquery *@
+
+<div class="titulo">Pagamento</div>
+
+
+<div class="salaoMesas">
+    <div class="textoExplicativo">
+        Como segue abaixo, existem quatro opções de mesa.
+    </div>
+    <div class="textoExplicativo">
+        Realize o pagamento para finalizar sua reserva
+    </div>
+ 
+</div>
+<div>
+    <div>
+        Valor total:
+        <span id="totalCompra"></span>
+
+    </div>
+    @{
+        decimal amount = 100.00m; // Exemplo de valor
+    }
+
+    <img src="@Url.Action("GenerateQrCode", "Pagamento", new { amount = amount })" alt="QR Code" />
+
+</div>
+
+
+<script>
+
+
+</script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+

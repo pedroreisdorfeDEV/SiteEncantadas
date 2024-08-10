@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SiteEncantadas.Business.CadastroService;
 using SiteEncantadas.Business.LoginService;
+using SiteEncantadas.Business.QRCode;
 using SiteEncantadas.Business.ReservaService;
 using SiteEncantadas.Data.Connections;
 using SiteEncantadas.Data.Contexts;
@@ -45,6 +46,7 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ICadastroRepository, CadastroRepository>();
 builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
 
+builder.Services.AddTransient<QrCodeService>();
 
 
 // Add session configuration

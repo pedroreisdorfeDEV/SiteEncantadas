@@ -37,12 +37,17 @@
 
 <style>
 
+    .btn-three:hover::before {
+        opacity: 0;
+        transform: scale(0.5,0.5);
+    }
+
 </style>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 @* mudei versão aqui do jquery *@
 
-<div class="titulo" >Reserva de ingressos</div>
+<div class="titulo">Reserva de ingressos</div>
 
 
 <div class="salaoMesas">
@@ -54,7 +59,7 @@
     </div>
     <div class="valorAssento">* R$ 200,00 por assento</div>
     <div class="mesasPrincesas">
-  
+
         <div class="divisao_1">
             <button id="mesa_circular">Valente</button>
             <div class="fila">
@@ -116,26 +121,36 @@
             </div>
         </div>
     </div>
- 
+
 </div>
 <div>
     <div>
         Valor total:
         <span id="totalCompra"></span>
-        <button class="botaoReservar" onclick="reservarCadeiras()">Reservar</button>
+
     </div>
+    <div>
+        <button id="botaoIrPagamento" class="botaoReservar btn btn-three" onclick="reservarCadeiras()" disabled>Ir para pagamento</button>
+    </div>
+    @{
+        decimal amount = 100.00m; // Exemplo de valor
+    }
+
+
+
 </div>
 
 
 <script>
     var listaPraReserva = [];
+    var valorTotal = 0.0;
 
     $(document).ready(function () {
         $.ajax({
             url: '@Url.Action("ObterCadeirasReservadas", "Ingresso")',
             method: 'GET',
             success: function (data) {
-          
+
                 if (data.length > 0) {
                     data.forEach(function (idCadeiraReservada) {
                         $('#cadeira-' + idCadeiraReservada).prop('disabled', true);
@@ -154,17 +169,17 @@
 
     function cadeiraSelecionada(botao, id) {
         var usuarioLogado = @usuarioLogado.ToString().ToLower();
-    
+
         if (usuarioLogado == false) {
             alert("Usuário deslogado. Para iniciar processo de reserva, faça o login!");
         }
-        else{
+        else {
             botao.classList.toggle("selecionada"); // faz com que adicione class "selecionada" caso a mesma não exista. Caso clicar no botão de novo e a class "selecionada" existir, eu removo ela.
             atualizarValorTotal();
-            debugger;
+
             if (!listaPraReserva.includes(id)) {
                 listaPraReserva.push(id);
-             
+
             } else {
                 let index = listaPraReserva.indexOf(id);
                 if (index > -1) {
@@ -172,10 +187,7 @@
 
                 }
             }
-    
         }
-       
-  
     }
 
     function atualizarValorTotal() {
@@ -185,30 +197,33 @@
             data: { numero_deCadeiras: numero_deCadeiras },
             success: function (data) {
                 $('#totalCompra').html('R$ ' + data); // atualiza o valor total na tela
+                valorTotal = data;
+                if (data > 0.0) {
+                    $('#botaoIrPagamento').prop('disabled', false).removeClass('disabled-button');
+                } else {
+                    $('#botaoIrPagamento').prop('disabled', true).addClass('disabled-button');
+                }
             }
         });
     }
 
+    $('#botaoIrPagamento').on('click', function () {
+        if (!$(this).prop('disabled')) {
+            $(this).addClass('move-back');
+        }
+ 
+    });
+
+
     $(function () {
-        atualizarValorTotal(); 
+        atualizarValorTotal();
     });
 
     function reservarCadeiras() {
-  
-        $.ajax({
-            url: '@Url.Action("ReservarIngressos", "Ingresso")',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(listaPraReserva),
-            success: function (response) {
-                debugger;
-                alert('Reserva realizada com sucesso!');
-          
-            },
-            error: function (xhr, status, error) {
-                console.error('Erro ao reservar cadeiras:', error);
-            }
-        });
+        var valorApagar = $('#totalCompra').val();
+        debugger;
+        window.location.href = '@Url.Action("Index", "Pagamento")';
+
     }
 
 </script>

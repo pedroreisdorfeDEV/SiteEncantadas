@@ -9,5 +9,6 @@ namespace SiteEncantadas.Helper.Session
         public void RemoverSessaoUsuario();
 
         public Usuario BuscarSessaoUsuario();
+        public void AtualizarSessao(Usuario usuario);
     }
 }
