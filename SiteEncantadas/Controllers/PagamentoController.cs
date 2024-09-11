@@ -4,6 +4,7 @@ using SiteEncantadas.Business.QRCode;
 using SiteEncantadas.Data.Contexts;
 using SiteEncantadas.Helper.Session;
 using SiteEncantadas.Models.Entities;
+using SiteEncantadas.Models.Entities.Reserva;
 
 namespace SiteEncantadas.Controllers
 {
@@ -46,8 +47,11 @@ namespace SiteEncantadas.Controllers
             var valorToal_json = JsonConvert.SerializeObject(valorToal);
           
             Usuario usuario = _sessao.BuscarSessaoUsuario();
-            usuario.ValorApagar = valorToal;
-            _sessao.AtualizarSessao(usuario);
+
+            if (usuario != null){
+                usuario.ValorApagar = valorToal;
+                _sessao.AtualizarSessao(usuario);
+            }
 
             return Json(valorToal_json);
         }
@@ -72,14 +76,44 @@ namespace SiteEncantadas.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConfirmPayment(int id)
+        public async Task ConfirmPayment()
         {
-            return NotFound();
+            Usuario usuario = _sessao.BuscarSessaoUsuario();
+
         }
 
         [HttpPost]
-        public IActionResult IrParaPagamento(double valorApagar)
+        public IActionResult IrParaPagamento([FromBody] ReservaDTO reservaDTO)
         {
+            Usuario usuario = _sessao.BuscarSessaoUsuario();
+           
+            foreach (var reserva in reservaDTO.ListaReserva)
+            {
+                Reserva_ingressos reserva_Ingresso = new Reserva_ingressos();
+
+                if(reserva <= 8)
+                {
+                    reserva_Ingresso.num_mesa = 1;
+                }
+                else if(reserva > 8 && reserva <= 16)
+                {
+                    reserva_Ingresso.num_mesa = 2;
+                }
+                else if(reserva > 16 && reserva <= 24)
+                {
+                    reserva_Ingresso.num_mesa = 3;
+                }
+                else
+                {
+                    reserva_Ingresso.num_mesa = 4;
+                }
+                reserva_Ingresso.num_cadeira = reserva;
+                reserva_Ingresso.ID = reserva;
+                reserva_Ingresso.valor_cadeira = 200.0m;
+                usuario.ListaReservas.Add(reserva_Ingresso);
+
+            }
+            _sessao.AtualizarSessao(usuario);
             return RedirectToAction("Index", "Pagamento");
         }
 

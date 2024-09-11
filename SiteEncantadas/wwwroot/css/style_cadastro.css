@@ -1,13 +1,19 @@
 ﻿.input-invalido {
-    border: 1px solid red;
+    border: 2px solid red;
 }
 
-.cpfinvalido, .nomeinvalido, .contatoInvalido, .contatoEmergencialInvalido {
+.cpfinvalido, .nomeinvalido, .contatoInvalido, .contatoEmergencialInvalido, .emailInvalido, .senhaInvalida {
     display: none;
     z-index: 2000;
     position: absolute;
     color: white;
 }
+
+.textoCampoInvalido {
+    font-size: .75rem;
+    color: white;
+}
+
 
 .botaoCadastrar {
     background-color: #116795;
@@ -25,6 +31,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-bottom: 1rem;
 }
 
 .registers {
@@ -108,5 +115,5 @@ label {
 }
 
 .divAdicionarCrianca {
-    margin-top: 1rem;
+    margin-top: 2rem;
 }

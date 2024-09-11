@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SiteEncantadas.Models.Entities;
+using SiteEncantadas.Models.Entities.Reserva;
 
 namespace SiteEncantadas.Helper.Session
 {
@@ -28,6 +29,8 @@ namespace SiteEncantadas.Helper.Session
 
         public void CriarSessaoUsuario(Usuario usuario)
         {
+            usuario.ListaReservas = [];
+            
             string usuarioJson = JsonConvert.SerializeObject(usuario);
             httpContext_.HttpContext.Session.SetString("sessaoUsuarioLogado", usuarioJson);
         }

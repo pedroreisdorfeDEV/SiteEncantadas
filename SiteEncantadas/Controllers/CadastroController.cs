@@ -52,7 +52,9 @@ namespace WebEncantadas.Controllers
             {
                 _context.Add(cadastro);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+                Usuario usuario = null;
+                ViewBag.Message = "Cadastro realizado com sucesso!";
+                return View("Cadastro", usuario);
             }
             else
             {

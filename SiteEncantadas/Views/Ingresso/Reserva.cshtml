@@ -33,6 +33,7 @@
 
 <head>
     <link rel="stylesheet" href="~/css/style_Reserva.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
 <style>
@@ -132,12 +133,6 @@
     <div>
         <button id="botaoIrPagamento" class="botaoReservar btn btn-three" onclick="reservarCadeiras()" disabled>Ir para pagamento</button>
     </div>
-    @{
-        decimal amount = 100.00m; // Exemplo de valor
-    }
-
-
-
 </div>
 
 
@@ -219,11 +214,26 @@
         atualizarValorTotal();
     });
 
-    function reservarCadeiras() {
-        var valorApagar = $('#totalCompra').val();
-        debugger;
-        window.location.href = '@Url.Action("Index", "Pagamento")';
 
+
+    function reservarCadeiras() {
+
+        var ListaReserva = listaPraReserva;
+        var ValorApagar = valorTotal;
+        
+        $.ajax({
+            url: '@Url.Action("IrParaPagamento", "Pagamento")',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                ListaReserva: ListaReserva, 
+                ValorApagar: ValorApagar
+            }),
+            success: function (data) {
+                window.location.href = '@Url.Action("Index", "Pagamento")';
+            }
+        });
+      
     }
 
 </script>

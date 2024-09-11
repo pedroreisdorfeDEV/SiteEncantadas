@@ -5,7 +5,7 @@
 }
 
 <style>
-
+  
 </style>
 
 
@@ -18,6 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <link rel="stylesheet" href="~/css/style_cadastro.css" />
     <link rel="stylesheet" href="~/css/popup.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
 <body>
@@ -34,12 +36,12 @@
                     <div class="form-group ladoEsquerdoDoCadastro">
                         <label asp-for="NomeResponsavel" class="control-label">Nome do Responsável</label>
                         <input asp-for="NomeResponsavel" class="form-control" id="nomeDoResponsavel" onblur="validaNomeResponsavel()" />
-                        <span class="nomeinvalido">Preencha nome e sobrenome!</span>
+                        <span class="nomeinvalido textoCampoInvalido">Preencha nome e sobrenome!</span>
                     </div>
                     <div class="form-group">
                         <label asp-for="CPF" class="control-label">CPF</label>
                         <input name="CPF" class="form-control" type="tel" id="cpfResponsavel" placeholder="000.000.000-00" maxlength="14" onblur="validaCpf()" />
-                        <span class="cpfinvalido">CPF inválido</span>
+                        <span class="cpfinvalido textoCampoInvalido">CPF inválido</span>
                     </div>
                 </div>
                 <div class="form-group divisoesCadastro">
@@ -51,6 +53,7 @@
                     <div class="form-group">
                         <label asp-for="ConfirmacaoEmail" class="control-label">Confirmar e-mail</label>
                         <input asp-for="ConfirmacaoEmail" class="form-control" id="confirma_email" onblur="validaConfirmacaoEmail();" />
+                        <span class="emailInvalido textoCampoInvalido" style="display:none">Confirmação inválida</span>
                     </div>
                 </div>
                 <div class="form-group divisoesCadastro">
@@ -61,6 +64,7 @@
                     <div class="form-group">
                         <label class="control-label">Confirmar senha</label>
                         <input class="form-control" id="confirmacaoSenha" onblur="validaConfirmacaoSenha();" />
+                        <span class="senhaInvalida textoCampoInvalido" style="display:none">Confirmação inválida</span>
                     </div>
                 </div>
 
@@ -192,10 +196,11 @@
 @*<div>
     <a asp-action="Index">Back to List</a>
 </div>*@
-@if (ViewBag.ErrorMessage != null)
+@* @if (ViewBag.ErrorMessage != null)
 {
     @await Html.PartialAsync("PopUp")
-}
+} *@
+
 
 @section Scripts {
     @{
@@ -205,16 +210,9 @@
 
 <script type="text/javascript">
 
-    // function validarEmailCadastro(){
-    //     debugger;
-    //     PopUp({
-    //         mensagem: "teste",
-    //         TipoMsg: TipoMsg.AVISO,
-    //         fnConfirma: function(){
-    //             location.reload();
-    //         }
-    //     })
-    // }
+    function validarEmailCadastro(){
+        showModal('Atenção', 'Cadastro feito com sucesso!');
+    }
 
     var numCriancas = $('#numeroDeCriancas').value;
 
@@ -326,7 +324,7 @@
     }
 
     function validarEmail() {
-        var email = document.getElementById("email").value;
+        var email = document.getElementById("email").value.trim();
         var regex = /^[^\s]+[^\s]+\.[^\s]+$/;
 
         if (!regex.test(email)) {
@@ -339,24 +337,32 @@
     }
 
     function validaConfirmacaoEmail() {
-        var email = document.getElementById("email").value;
-        var confirmacaoEmail = document.getElementById("confirma_email").value;
+        var email = document.getElementById("email").value.trim();
+        var confirmacaoEmail = document.getElementById("confirma_email").value.trim();
 
         if (email != confirmacaoEmail) {
-
+            $('.emailInvalido').css('display', 'flex');
             $('#confirma_email').addClass('input-invalido');
-            document.getElementById("email").value = " ";
+            document.getElementById("confirma_email").value = " ";
+        }
+        else{
+            $('#confirma_email').removeClass('input-invalido');
+            $('.emailInvalido').css('display', 'none');
         }
     }
 
     function validaConfirmacaoSenha() {
-        var senha = document.getElementById("senha").value;
-        var confirmacaoSenha = document.getElementById("confirmacaoSenha").value;
-
+        var senha = document.getElementById("senha").value.trim();
+        var confirmacaoSenha = document.getElementById("confirmacaoSenha").value.trim();
+        debugger;
         if (senha != confirmacaoSenha) {
-
             $('#confirmacaoSenha').addClass('input-invalido');
-            document.getElementById("senha").value = " ";
+            document.getElementById("confirmacaoSenha").value = " ";
+            $('.senhaInvalida').css('display', 'flex');
+        }
+        else{
+            $('#confirmacaoSenha').removeClass('input-invalido');
+            $('.senhaInvalida').css('display', 'none');
         }
     }
 
@@ -396,21 +402,18 @@
 
         var dateBorn = new Date(document.getElementById(id).value);
 
-        var minDate = new Date("2015-08-31"); // define a data mínima permitida
-        var maxDate = new Date("2019-12-31"); // define a data máxima permitida
-
-        if (dateBorn >= minDate && dateBorn <= maxDate) {
-            console.log("Data de nascimento válida");
+        var minDate = new Date("2014-12-31"); 
+        var maxDate = new Date("2020-12-31"); 
+        debugger;
+        if (dateBorn >= minDate && dateBorn <= maxDate) {     
+            $("#" + id).removeClass('input-invalido');
             $('.data1').css('display', 'none');
         }
         else {
-            console.log("Data de nascimento inválida");
-            $("#" + id).css('border', '2px solid red');
-            //document.getElementById("dateborn1").value = " ";
+            $("#" + id).addClass('input-invalido');
             $('.data1').css('display', 'flex');
+
         }
-
     }
-
 </script>
 

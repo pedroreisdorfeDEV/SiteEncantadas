@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/css/style_Login.css" />
     <script src="~/js/PopUpDefault.js" asp-append-version="true"></script>
     <link rel="stylesheet" href="~/css/popup.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -47,10 +48,6 @@
 
 </script>
 
-@if (ViewBag.ErrorMessage != null)
-{
-    @await Html.PartialAsync("PopUp")
-}
 
 
 
