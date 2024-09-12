@@ -61,5 +61,11 @@ namespace SiteEncantadas.Business.ReservaService
 
             return listaCadeirasReservadas;
         }
+
+        public async Task<bool> ReservarIngresso(Usuario usuario)
+        {
+            bool reservou = await _reservaRepository.ReservarIngresso(usuario);
+            return reservou;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SiteEncantadas.Business.QRCode;
+using SiteEncantadas.Business.ReservaService;
 using SiteEncantadas.Data.Contexts;
 using SiteEncantadas.Helper.Session;
 using SiteEncantadas.Models.Entities;
@@ -13,12 +14,14 @@ namespace SiteEncantadas.Controllers
         private readonly Contexto _context;
         private readonly QrCodeService _qrCodeService;
         private readonly ISessao _sessao;
+        private readonly IReservaService _reservaService;
 
-        public PagamentoController(QrCodeService qrCodeService, Contexto context, ISessao sessao)
+        public PagamentoController(QrCodeService qrCodeService, Contexto context, ISessao sessao, IReservaService reservaService)
         {
             _qrCodeService = qrCodeService;
             _context = context;
             _sessao = sessao;
+            _reservaService = reservaService;
         }
 
         public IActionResult Index()
@@ -75,18 +78,19 @@ namespace SiteEncantadas.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task ConfirmPayment()
         {
             Usuario usuario = _sessao.BuscarSessaoUsuario();
-
+            bool reservou = await _reservaService.ReservarIngresso(usuario);    
+            // tratar caso algum dos assentos já estiver reservado
         }
 
         [HttpPost]
         public IActionResult IrParaPagamento([FromBody] ReservaDTO reservaDTO)
         {
             Usuario usuario = _sessao.BuscarSessaoUsuario();
-           
+            usuario.ListaReservas = [];
             foreach (var reserva in reservaDTO.ListaReserva)
             {
                 Reserva_ingressos reserva_Ingresso = new Reserva_ingressos();

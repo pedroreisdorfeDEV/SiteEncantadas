@@ -6,5 +6,6 @@ namespace SiteEncantadas.Business.ReservaService
     {
         Task<Mesas> BuscarEconstruirMesas();
         Task<List<int>> ObterCadeirasReservadas();
+        Task<bool> ReservarIngresso(Usuario usario);
     }
 }

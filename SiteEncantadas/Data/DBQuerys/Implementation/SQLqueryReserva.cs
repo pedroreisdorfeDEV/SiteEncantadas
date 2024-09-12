@@ -1,4 +1,5 @@
 ﻿using SiteEncantadas.Data.DBQuerys.Abstarction;
+using SiteEncantadas.Models.Entities;
 
 namespace SiteEncantadas.Data.DBQuerys.Implementation
 {
@@ -14,5 +15,26 @@ namespace SiteEncantadas.Data.DBQuerys.Implementation
 
             return query;
         }
+
+        public string UpdateStatusReserva(int id)
+        {
+            string query = $@"UPDATE reserva_ingressos
+                SET  cadeira_reservada = 1
+                    WHERE
+                        ID = {id};";
+
+            return query;
+        }
+        public string VerificarStatusCadeira(int id)
+        {
+            string query = $@"SELECT cadeira_reservada
+                    FROM
+                        reserva_ingressos
+                    WHERE
+                        id = {id};";
+
+            return query;
+        }
+
     }
 }

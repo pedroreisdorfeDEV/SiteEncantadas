@@ -45,7 +45,45 @@
         margin-top: 1rem;
         color: gray;
     }
+
+    .textoLoading{
+        display: flex;
+        align-items: center;
+    }
+
+    .loadingClass{
+        display:flex;
+        flex-direction: column;
+    }
 </style>
+
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Pagamento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="loadingClass">
+                <div class="modal-body textoLoading">
+                    Realizando pagamento
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Carregando...</span>
+                    </div>
+                </div>
+            </div>
+        
+            @* <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Salvar alterações</button>
+            </div> *@
+        </div>
+    </div>
+</div>
 
 <div class="pagamentoClass">
     <div class="titulo">Pagamento</div>
@@ -57,7 +95,7 @@
     <div class="qrcodeCopiaEcola">
         <div> <img src="@Url.Action("GenerateQrCode", "Pagamento", new { amount = 200.00 })" alt="QR Code" class="qrcode" /></div>
         <div>
-            <button id="" class="botaoCopiaEcola btn btn-three" onclick="">Copia e cola</button>
+            <button id="" class="botaoCopiaEcola btn btn-three" onclick="realizarPagamento()">Copia e cola</button>
         </div>
         <div id="cronometro" class="cronometro">
             Tempo restante: <span id="tempoRestante">02:00</span> <!-- Inicialmente configurado para 5 minutos -->
@@ -76,6 +114,15 @@
 
 
 <script>
+
+    function realizarPagamento(){
+        $('#myModal').modal('show');
+    }
+
+    function closeModal(){
+        $('#myModal').modal('hide');
+    }
+
     function iniciarCronometro(duracao, display) {
         var timer = duracao, minutes, seconds;
         setInterval(function () {
@@ -86,10 +133,19 @@
             seconds = seconds < 10 ? "0" + seconds : seconds;
 
             display.textContent = minutes + ":" + seconds;
-    
-            if (minutes == "01" && seconds == "40") {
+            
+            // marcadopara não entrar no if
+            if (minutes == "00333" && seconds == "50") {
                 // teste de reserva fake
                 // chamar api para realizar a reserva de poltrona
+                debugger;
+                $.ajax({
+                    url: '@Url.Action("ConfirmPayment", "Pagamento")',
+                    type: 'POST',
+                    success: function (data) {
+                        window.location.href = '@Url.Action("Index", "Pagamento")';
+                    }
+                });
 
             }
 
