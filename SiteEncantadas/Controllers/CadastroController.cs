@@ -5,6 +5,7 @@ using SiteEncantadas.Data.Contexts;
 using SiteEncantadas.Helper.Session;
 using SiteEncantadas.Models.Entities;
 using SiteEncantadas.Models.ViewModels;
+using System.Diagnostics;
 
 namespace WebEncantadas.Controllers
 {
@@ -53,14 +54,16 @@ namespace WebEncantadas.Controllers
                 _context.Add(cadastro);
                 await _context.SaveChangesAsync();
                 Usuario usuario = null;
-                ViewBag.Message = "Cadastro realizado com sucesso!";
+                //ViewBag.Message = "Cadastro realizado com sucesso!";
                 return View("Cadastro", usuario);
             }
-            else
-            {
+            else { 
+  
+              
+                // tratar mensagem e modal no front
                 Usuario usuario = null;
                 ViewBag.ErrorMessage = "Email já cadastrado!";
-                return View("Cadastro", usuario);
+                return BadRequest("Email já existente");
                 //// mostrar popUp de email já cadastrado
                 //return RedirectToAction("Index", "Home");
             }

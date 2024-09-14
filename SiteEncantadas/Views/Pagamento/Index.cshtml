@@ -135,10 +135,10 @@
             display.textContent = minutes + ":" + seconds;
             
             // marcadopara não entrar no if
-            if (minutes == "00333" && seconds == "50") {
+            if (minutes == "01" && seconds == "50") {
                 // teste de reserva fake
                 // chamar api para realizar a reserva de poltrona
-                debugger;
+              
                 $.ajax({
                     url: '@Url.Action("ConfirmPayment", "Pagamento")',
                     type: 'POST',

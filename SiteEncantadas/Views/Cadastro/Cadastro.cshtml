@@ -22,6 +22,29 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
+<div class="modal fade" id="sucessoCadastro" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Cadastro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="loadingClass">
+                <div class="modal-body textoLoading">
+                    Cadastro realizado!
+                </div>
+  
+            </div>
+
+            <div class="modal-footer">
+            <button onclick="cadastroOk()" type="button" class="btn btn-primary">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <body>
 
     <h4 class="tituloCadastro">Cadastro</h4>
@@ -186,20 +209,12 @@
                 </div>
 
                 <div class="form-group divCasastro">
-                    <input onclick="validarEmailCadastro()" type="submit" value="Cadastrar" class="btn btn-primary botaoCadastrar" id="cadastrar" /> @*value é o nome do botão para cadastrar*@
+                    <input type="button" value="Cadastrar" class="btn btn-primary botaoCadastrar" id="cadastrar" /> @*value é o nome do botão para cadastrar*@
                 </div>
             </form>
         </div>
     </div>
 </body>
-
-@*<div>
-    <a asp-action="Index">Back to List</a>
-</div>*@
-@* @if (ViewBag.ErrorMessage != null)
-{
-    @await Html.PartialAsync("PopUp")
-} *@
 
 
 @section Scripts {
@@ -210,8 +225,40 @@
 
 <script type="text/javascript">
 
-    function validarEmailCadastro(){
-        showModal('Atenção', 'Cadastro feito com sucesso!');
+    $(document).ready(function () {
+        // Intercepta o envio do formulário
+        $('#cadastrar').on('click', function (e) {
+       
+            e.preventDefault(); // Evita o comportamento padrão de envio do formulário
+            var formData = $('form').serialize(); // Serializa os dados do formulário
+    
+            $.ajax({
+                url: '@Url.Action("Create_", "Cadastro")', // Endpoint que será chamado
+                type: 'POST', // Método
+                data: formData, // Dados serializados
+                success: function (response) {          
+                    $('#sucessoCadastro').modal('show');
+  
+                },
+                error: function (xhr, status, error) {
+            
+                    alert("Ocorreu um erro ao cadastrar.");
+                }
+            });
+        });
+    });
+
+    function cadastroRelizado() {
+        $('#sucessoCadastro').modal('show');
+    }
+
+    function closeModal() {
+        $('#sucessoCadastro').modal('hide');
+    }
+    
+    function cadastroOk() {
+     
+        window.location.href = '@Url.Action("Login", "Login")';
     }
 
     var numCriancas = $('#numeroDeCriancas').value;
@@ -354,7 +401,7 @@
     function validaConfirmacaoSenha() {
         var senha = document.getElementById("senha").value.trim();
         var confirmacaoSenha = document.getElementById("confirmacaoSenha").value.trim();
-        debugger;
+     
         if (senha != confirmacaoSenha) {
             $('#confirmacaoSenha').addClass('input-invalido');
             document.getElementById("confirmacaoSenha").value = " ";
@@ -404,7 +451,7 @@
 
         var minDate = new Date("2014-12-31"); 
         var maxDate = new Date("2020-12-31"); 
-        debugger;
+
         if (dateBorn >= minDate && dateBorn <= maxDate) {     
             $("#" + id).removeClass('input-invalido');
             $('.data1').css('display', 'none');
