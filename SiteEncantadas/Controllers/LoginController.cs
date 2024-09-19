@@ -24,7 +24,6 @@ namespace SiteEncantadas.Controllers
         }
         public IActionResult Login()
         {
-            //se usuário estiver logado, redirecionar para a home
             if (_sessao.BuscarSessaoUsuario() != null)
             {
                 ViewBag.UsuarioLogado = true;

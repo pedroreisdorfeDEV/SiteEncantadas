@@ -42,11 +42,8 @@ namespace SiteEncantadas.Controllers
         [HttpPost]
         public IActionResult ReservarIngressos([FromBody] List<int> listaPraReserva)
         {
-            // Lógica para reservar as cadeiras
-            // ...
             return RedirectToAction("IndexPagamento", "Pagamento");
 
-            //return Ok();
         }
     }
 }

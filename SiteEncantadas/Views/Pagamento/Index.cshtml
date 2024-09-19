@@ -26,13 +26,7 @@
         margin-top: 1rem;
     }
 
-    .botaoCopiaEcola {
-        background-color: #baddef;
-        border: 1px solid #CC9971;
-        color: black;
-        border-radius: 6px;
-        margin-top: 1rem;
-    }
+
 
     .qrcodeCopiaEcola{
         display: flex;
@@ -51,9 +45,39 @@
         align-items: center;
     }
 
+    .textoSobreQrCode{
+        margin-bottom: 1rem;
+    }
+
     .loadingClass{
         display:flex;
         flex-direction: column;
+    }
+
+    .copieCola{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .botaoCopiaEcola {
+        background-color: #baddef;
+        border: 1px solid #CC9971;
+        color: black;
+        border-radius: 6px;
+        margin-top: 1rem;
+        margin-left: .5rem;
+        width: 10rem;
+    }
+
+
+    .inputCopieCola {
+        background-color: white;
+        border: 1px solid #CC9971;
+        color: black;
+        border-radius: 6px;
+        margin-top: 1rem;
+        margin-right: .5rem;
+        width: 10rem;
     }
 </style>
 
@@ -70,16 +94,23 @@
                 <div class="modal-body textoLoading">
                     Realizando pagamento
                 </div>
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center loadingCarregando">
                     <div class="spinner-border" role="status">
-                        <span class="sr-only">Carregando...</span>
+                        <span class="sr-only ">Carregando...</span>
+                      
                     </div>
+                    
                 </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button onclick="finalizarProcesso()" type="button" class="btn btn-primary botaoOk" style="display:none">Ok</button>
             </div>
         
             @* <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Salvar alterações</button>
+               
             </div> *@
         </div>
     </div>
@@ -91,25 +122,32 @@
     {
         <p>Total a pagar: R$ @ViewBag.Usuario.ValorApagar</p>
     }
-    @* Adicionar cronometro *@
-    <div class="qrcodeCopiaEcola">
-        <div> <img src="@Url.Action("GenerateQrCode", "Pagamento", new { amount = 200.00 })" alt="QR Code" class="qrcode" /></div>
-        <div>
-            <button id="" class="botaoCopiaEcola btn btn-three" onclick="realizarPagamento()">Copia e cola</button>
-        </div>
-        <div id="cronometro" class="cronometro">
-            Tempo restante: <span id="tempoRestante">02:00</span> <!-- Inicialmente configurado para 5 minutos -->
-        </div>
-    </div>
 
     <div class="textosPagamento">
         <div>
             Finalize o pagamento para concluir sua reserva.
         </div>
-        <div>
-            Aponte a câmera para QRCode ou use método copia e cola para realizar o pagamento
+        <div class="textoSobreQrCode">
+            Aponte a câmera para QRCode ou copie o código para realizar o pagamento.
+
+        </div>
+        
+    </div>
+    <div class="qrcodeCopiaEcola">
+        <div> <img src="@Url.Action("GenerateQrCode", "Pagamento", new { amount = 200.00 })" alt="QR Code" class="qrcode" /></div>
+        <div class="copieCola">
+            
+            <input class="inputCopieCola" />
+            <div>
+                <button id="" class="botaoCopiaEcola btn btn-three" onclick="realizarPagamento()">Copia e cola</button>
+            </div>
+        </div>
+        <div id="cronometro" class="cronometro">
+            Tempo restante: <span id="tempoRestante">02:00</span> 
         </div>
     </div>
+
+  
 </div>
 
 
@@ -117,6 +155,10 @@
 
     function realizarPagamento(){
         $('#myModal').modal('show');
+    }
+
+    function finalizarProcesso(){
+        window.location.href = '@Url.Action("Index", "Home")';
     }
 
     function closeModal(){
@@ -134,16 +176,16 @@
 
             display.textContent = minutes + ":" + seconds;
             
-            // marcadopara não entrar no if
-            if (minutes == "01" && seconds == "50") {
-                // teste de reserva fake
-                // chamar api para realizar a reserva de poltrona
-              
+            if (minutes == "03" && seconds == "55") {
+
                 $.ajax({
                     url: '@Url.Action("ConfirmPayment", "Pagamento")',
                     type: 'POST',
                     success: function (data) {
-                        window.location.href = '@Url.Action("Index", "Pagamento")';
+                        $('.textoLoading').text("Reserva realizada com sucesso!");
+                        $('.loadingCarregando').css('display', 'none');
+                        $('.spinner-border').css('display', 'none');
+                        $('.botaoOk').css('display', 'flex');
                     }
                 });
 
@@ -158,7 +200,7 @@
     }
 
     window.onload = function () {
-        var cincoMinutos = 60 * 2, // 2 mintos em segundos
+        var cincoMinutos = 60 * 2, 
             display = document.querySelector('#tempoRestante'); // Elemento onde o tempo será exibido
         iniciarCronometro(cincoMinutos, display);
     };

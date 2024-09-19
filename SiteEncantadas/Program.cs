@@ -30,9 +30,6 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // Add singleton services
 builder.Services.AddSingleton<IConnectionManager, ConnectionManager>();
 builder.Services.AddSingleton<IDataBaseConnectionFactory, DbConnectionFactory>();
-//builder.Services.AddSingleton<IUsuarioRepository, UsuarioRepository>();
-//builder.Services.AddSingleton<ICadastroRepository, CadastroRepository>();
-//builder.Services.AddSingleton<IReservaRepository, ReservaRepository>();
 builder.Services.AddSingleton<IContextData, ContextDataSqlServer>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

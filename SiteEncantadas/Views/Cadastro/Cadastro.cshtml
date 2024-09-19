@@ -329,14 +329,11 @@
     telefoneEmergencialInput.addEventListener('input', function (event) {
         let telefoneEmergencial = event.target.value;
 
-        // Remove tudo o que não é dígito
         telefoneEmergencial = telefoneEmergencial.replace(/\D/g, '');
 
-        // Adiciona parênteses e traço
         telefoneEmergencial = telefoneEmergencial.replace(/(\d{2})(\d)/, '($1) $2');
         telefoneEmergencial = telefoneEmergencial.replace(/(\d{5})(\d)/, '$1-$2');
 
-        // Atualiza o valor do input
         event.target.value = telefoneEmergencial;
     });
 

@@ -169,7 +169,7 @@
             alert("Usuário deslogado. Para iniciar processo de reserva, faça o login!");
         }
         else {
-            botao.classList.toggle("selecionada"); // faz com que adicione class "selecionada" caso a mesma não exista. Caso clicar no botão de novo e a class "selecionada" existir, eu removo ela.
+            botao.classList.toggle("selecionada"); 
             atualizarValorTotal();
 
             if (!listaPraReserva.includes(id)) {
@@ -186,12 +186,12 @@
     }
 
     function atualizarValorTotal() {
-        var numero_deCadeiras = $('.cadeira.selecionada').length; // obtém o número de cadeiras selecionadas
+        var numero_deCadeiras = $('.cadeira.selecionada').length; 
         $.ajax({
             url: '@Url.Action("CalcularValorTotal", "Pagamento")',
             data: { numero_deCadeiras: numero_deCadeiras },
             success: function (data) {
-                $('#totalCompra').html('R$ ' + data); // atualiza o valor total na tela
+                $('#totalCompra').html('R$ ' + data); 
                 valorTotal = data;
                 if (data > 0.0) {
                     $('#botaoIrPagamento').prop('disabled', false).removeClass('disabled-button');

@@ -33,14 +33,9 @@ namespace WebEncantadas.Controllers
             {
                 ViewBag.UsuarioLogado = false;
             }
-            // Todo: aqui vou precisar mudar  a lógica, pq essa view espera retorno de Cadastroview model
-            // TODO: comentário da antiga aplicação
             return View(usuario);
         }
 
-        // POST: Produtos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create_(CadastroViewModel cadastro)
@@ -54,17 +49,14 @@ namespace WebEncantadas.Controllers
                 _context.Add(cadastro);
                 await _context.SaveChangesAsync();
                 Usuario usuario = null;
-                //ViewBag.Message = "Cadastro realizado com sucesso!";
                 return View("Cadastro", usuario);
             }
             else { 
-  
               
                 // tratar mensagem e modal no front
                 Usuario usuario = null;
                 ViewBag.ErrorMessage = "Email já cadastrado!";
                 return BadRequest("Email já existente");
-                //// mostrar popUp de email já cadastrado
                 //return RedirectToAction("Index", "Home");
             }
 
