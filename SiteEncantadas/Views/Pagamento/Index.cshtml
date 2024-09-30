@@ -85,7 +85,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Pagamento</h5>
+                <h5 class="modal-title tituloPagamento" id="myModalLabel">
+                    Pagamento
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -137,9 +139,9 @@
         <div> <img src="@Url.Action("GenerateQrCode", "Pagamento", new { amount = 200.00 })" alt="QR Code" class="qrcode" /></div>
         <div class="copieCola">
             
-            <input class="inputCopieCola" />
+            <input class="inputCopieCola" value="00020126580014BR.GOV.BCB.PIX0136c91657cf-59c5-4c16-a5d3-be9ecc3ff45752040000530398654041.005802BR5925Pedro Vinicius Francisco 6009SAO PAULO61080540900062240520siKDExEsUHPAa13uj9jm630417D7"  />
             <div>
-                <button id="" class="botaoCopiaEcola btn btn-three" onclick="realizarPagamento()">Copia e cola</button>
+                <button id="" class="botaoCopiaEcola btn btn-three" onclick="realizarPagamento()">Copiar´código</button>
             </div>
         </div>
         <div id="cronometro" class="cronometro">
@@ -176,12 +178,13 @@
 
             display.textContent = minutes + ":" + seconds;
             
-            if (minutes == "03" && seconds == "55") {
+            if (minutes == "01" && seconds == "50") {
 
                 $.ajax({
                     url: '@Url.Action("ConfirmPayment", "Pagamento")',
                     type: 'POST',
                     success: function (data) {
+                        $('.tituloPagamento').text("Pagamento feito!");
                         $('.textoLoading').text("Reserva realizada com sucesso!");
                         $('.loadingCarregando').css('display', 'none');
                         $('.spinner-border').css('display', 'none');
