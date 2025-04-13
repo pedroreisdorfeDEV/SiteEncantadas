@@ -6,8 +6,8 @@
     align-items: center;
     justify-content: center;
     margin-top: 1rem;
-    background-position: center; /* Centraliza a imagem */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    background-position: center; 
+    background-repeat: no-repeat;
     background-color: white;
 }
 
@@ -178,12 +178,10 @@
 
 
 .backgroundValente {
-    /*background-image: url('/Imagens/imagensMesaReserva/valente.jpg');*/
-    /*background-size: cover;*/ /* Ajusta a imagem para cobrir toda a div */
-    background-position: center; /* Centraliza a imagem */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
-    width: 100%; /* Ajuste o tamanho conforme necessário */
-    height: 400px; /* Ajuste o tamanho conforme necessário */
+    background-position: center;
+    background-repeat: no-repeat; 
+    width: 100%;
+    height: 400px; 
 }
 
 #mesa_circular {
@@ -239,6 +237,6 @@ body {
 }
 
 .disabled-button {
-    opacity: 0.5; /* Define a opacidade desejada */
-    cursor: not-allowed; /* Opcional: muda o cursor para indicar que o botão está desabilitado */
+    opacity: 0.5;
+    cursor: not-allowed;
 }

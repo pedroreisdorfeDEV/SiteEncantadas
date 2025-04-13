@@ -24,7 +24,6 @@ namespace SiteEncantadas.Helper.Session
             Usuario usuarioLogado = JsonConvert.DeserializeObject<Usuario>(sessaoUsuario);
             UsuarioLogado = usuarioLogado;
             return usuarioLogado;
-            // fazer ajustes com a possibilidade de ser null
         }
 
         public void CriarSessaoUsuario(Usuario usuario)

@@ -37,10 +37,6 @@ namespace SiteEncantadas.Controllers
                 ViewBag.UsuarioLogado = false;
             }
             return View(usuario);
-            // TODO: AQUI VAI PRECISAR TER INJECAO DE DEPENDENCIA COM SESSAO PARA RETORNAR USUARIO LOGADO, COMO TEM NAS OUTRAS CONTROLLERES
-            //double valorIngresso = 200.00;
-            //var valorIngresso_json = JsonConvert.SerializeObject(valorIngresso);
-            //return Json(valorIngresso_json);
         }
 
         public IActionResult CalcularValorTotal(int numero_deCadeiras)

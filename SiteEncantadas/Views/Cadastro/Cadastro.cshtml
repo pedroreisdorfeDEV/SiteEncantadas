@@ -52,7 +52,6 @@
     <div class="registers">
         <div class="">
             <form asp-action="Create_" method="post">
-                @*aqui estou colocando que meu cadastro tem relação direta com Create da minha CadastroController.cs*@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group divisoesCadastro">
@@ -209,7 +208,7 @@
                 </div>
 
                 <div class="form-group divCasastro">
-                    <input type="button" value="Cadastrar" class="btn btn-primary botaoCadastrar" id="cadastrar" /> @*value é o nome do botão para cadastrar*@
+                    <input type="button" value="Cadastrar" class="btn btn-primary botaoCadastrar" id="cadastrar" /> 
                 </div>
             </form>
         </div>
@@ -226,23 +225,25 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        // Intercepta o envio do formulário
+     
         $('#cadastrar').on('click', function (e) {
        
-            e.preventDefault(); // Evita o comportamento padrão de envio do formulário
-            var formData = $('form').serialize(); // Serializa os dados do formulário
+            e.preventDefault(); 
+            var formData = $('form').serialize(); 
     
             $.ajax({
-                url: '@Url.Action("Create_", "Cadastro")', // Endpoint que será chamado
-                type: 'POST', // Método
-                data: formData, // Dados serializados
+                url: '@Url.Action("Create_", "Cadastro")', 
+                type: 'POST', 
+                data: formData, 
                 success: function (response) {          
                     $('#sucessoCadastro').modal('show');
   
                 },
                 error: function (xhr, status, error) {
-            
-                    alert("Ocorreu um erro ao cadastrar.");
+                    if (xhr.responseText == ""){
+                        xhr.responseText = "Reveja os campos de cadastro!"
+                    }
+                    alert(xhr.responseText);
                 }
             });
         });
@@ -276,12 +277,9 @@
 
     telefoneInput.addEventListener('input', function (event) {
         let telefone = event.target.value;
-        // Remove tudo o que não é dígito
         telefone = telefone.replace(/\D/g, '');
-        // Adiciona parênteses e traço
         telefone = telefone.replace(/(\d{2})(\d)/, '($1) $2');
         telefone = telefone.replace(/(\d{5})(\d)/, '$1-$2');
-        // Atualiza o valor do input
         event.target.value = telefone;
     });
 
@@ -289,13 +287,10 @@
 
     cpfInput.addEventListener('input', function (event) {
         let cpf = event.target.value;
-        // Remove tudo o que não é dígito
         cpf = cpf.replace(/\D/g, '');
-        // Adiciona pontos e traço
         cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
         cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
         cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-        // Atualiza o valor do input
         event.target.value = cpf;
     });
 
@@ -373,7 +368,7 @@
 
         if (!regex.test(email)) {
             alert("Por favor, digite um endereço de e-mail válido.");
-            document.getElementById("email").value = " ";
+            document.getElementById("email").value = "";
             return false;
 
         }
@@ -387,7 +382,7 @@
         if (email != confirmacaoEmail) {
             $('.emailInvalido').css('display', 'flex');
             $('#confirma_email').addClass('input-invalido');
-            document.getElementById("confirma_email").value = " ";
+            document.getElementById("confirma_email").value = "";
         }
         else{
             $('#confirma_email').removeClass('input-invalido');
@@ -401,7 +396,7 @@
      
         if (senha != confirmacaoSenha) {
             $('#confirmacaoSenha').addClass('input-invalido');
-            document.getElementById("confirmacaoSenha").value = " ";
+            document.getElementById("confirmacaoSenha").value = "";
             $('.senhaInvalida').css('display', 'flex');
         }
         else{
@@ -411,34 +406,21 @@
     }
 
     function adicionarCriancas() {
-        var numeroCriancas = $('#numeroDeCriancas').val();
-        if (numeroCriancas == "1") {
-            document.getElementById('inputsCad').style.display = 'flex';
-            document.getElementById('chield1').style.display = 'flex';
-        }
-        else if (numeroCriancas == "2") {
-            document.getElementById('inputsCad').style.display = 'flex';
-            document.getElementById('chield1').style.display = 'flex';
-            document.getElementById('chield2').style.display = 'flex';
-        }
-        else if (numeroCriancas == "3") {
-            document.getElementById('inputsCad').style.display = 'flex';
-            document.getElementById('chield1').style.display = 'flex';
-            document.getElementById('chield2').style.display = 'flex';
-            document.getElementById('chield3').style.display = 'flex';
-        }
-        else if (numeroCriancas == "4") {
-            document.getElementById('inputsCad').style.display = 'flex';
-            document.getElementById('chield1').style.display = 'flex';
-            document.getElementById('chield2').style.display = 'flex';
-            document.getElementById('chield3').style.display = 'flex';
-            document.getElementById('chield4').style.display = 'flex';
+        var numeroCriancas = parseInt($('#numeroDeCriancas').val());
+        $('#inputsCad').css('display', 'flex');
+
+        for (let i = 1; i <= 4; i++) {
+            let child = $('#chield' + i);
+            if (i <= numeroCriancas) {
+                child.css('display', 'flex');
+            } else {
+                child.css('display', 'none');
+            }
         }
     }
 
     function validaNascimento(dateNasc) {
         var id = $(dateNasc).attr("id");
-        //preciso deixar essa função dinâmica, para pegar valor de 1 ao 4 de modo correspondente ao que o usuário clicar
         var dateChield1 = $("#" + id).val();
 
         var dateBorn = new Date(document.getElementById(id).value);

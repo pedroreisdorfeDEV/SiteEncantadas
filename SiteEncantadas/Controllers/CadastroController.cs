@@ -40,7 +40,7 @@ namespace WebEncantadas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create_(CadastroViewModel cadastro)
         {
-            // precisa de tratamento de erro ao se cadastrar
+            // TODO: add novos tratamentos
 
             bool emailJaExistente = await _cadastroService.VerificarEmailCadastro(cadastro.Email);
 
@@ -57,7 +57,6 @@ namespace WebEncantadas.Controllers
                 Usuario usuario = null;
                 ViewBag.ErrorMessage = "Email já cadastrado!";
                 return BadRequest("Email já existente");
-                //return RedirectToAction("Index", "Home");
             }
 
         }
